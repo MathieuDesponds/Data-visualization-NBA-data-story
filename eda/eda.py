@@ -210,10 +210,8 @@ def find_ranking(daily_scores):
     return sub_sorted
     
 
-ranking.groupby("standingsdate").apply(lambda subdf : find_ranking(subdf))
+ranking = ranking.groupby("standingsdate").apply(lambda subdf : find_ranking(subdf))
 # -
-
-
 
 ranking.to_csv("../data/preprocessed/rankings.csv")
 
