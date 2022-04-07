@@ -41,13 +41,12 @@ games.columns = [name.lower() for name in games.columns]
 ## let's use datetime
 games["date"] = pd.to_datetime(games.game_date_est)
 
-## GAME_STATUS_TEXT can be droped
 f = plt.figure(figsize=(15, 6))
-games["SEASON"] = games.season.astype(str)
-g = sns.histplot(data=games, x="SEASON", palette="viridis")
+games["SEASON"] = pd.to_datetime(games.season.astype(str))
+g = sns.histplot(data=games, x="SEASON", palette="viridis", binwidth=365)
 g.set_title("distribution of the number of game per seasons")
 g.set_ylabel("number of games")
-g.set_xlabel("season")
+g.set_xlabel("season");
 
 g = sns.countplot(data=games, x="home_team_wins")
 g.set_title("distribution of games won by hosting team")
@@ -157,7 +156,78 @@ a.set_xlabel("precisions ration")
 plt.legend();
 # -
 
+g = sns.histplot(details.groupby("player_name").pts.mean().reset_index()\
+            .sort_values("pts", ascending=False).dropna())
+g.set_title("Distribution of the mean number of points per game per player")
+g.set_ylabel("number of players")
+g.set_xlabel("mean number of points per game");
+
+# +
+f = plt.figure(figsize=(15, 7))
+team_points = details.groupby('team_id').pts.mean().reset_index()\
+            .sort_values("pts").dropna()\
+            .merge(teams[["team_id", "name"]], on="team_id")
+
+g = sns.barplot(data=team_points, x='name', y="pts")
+g.set_xticklabels(g.get_xticklabels(), rotation=45)
+g.set_title("mean number of points for every player in a team")
+g.set_xlabel("name of the team")
+g.set_ylabel("average number of points for every player in a team");
+
+# +
+f = plt.figure(figsize=(15, 5))
+shoot = details.groupby("player_name").pts.mean().reset_index()\
+            .sort_values("pts", ascending=False).head(20)
+
+g = sns.barplot(data=shoot, x="player_name", y="pts")
+g.set_xticklabels(g.get_xticklabels(), rotation=45)
+g.set_title("mean points per match for the 20 bests players")
+g.set_xlabel("mean number of points per match")
+g.set_ylabel("player");
+# -
+
 details["min"] = details["min"].astype(str).apply(lambda x : float(x.split(":")[0]))
+
+details.groupby("player_name")[["pts", "min"]].mean().reset_index()
+
+fig = px.scatter(details.groupby("player_name")[["pts", "min"]].mean().reset_index(),\
+                 x="pts", y="min", hover_data=['player_name'],\
+                 labels={
+                        "pts" : "mean points per match",
+                        "min" : "average number of minutes played"
+                }, \
+                title="Relation between the average of time played and the number of points scored")
+fig.update_layout(width=800, height=800)
+fig.show()
+
+tea
+
+# +
+f = plt.figure(figsize=(15, 5))
+shoot = details.groupby("player_name").fg3m.mean().reset_index()\
+            .sort_values("fg3m", ascending=False).head(20)
+
+g = sns.barplot(data=shoot, x="player_name", y="fg3m")
+g.set_xticklabels(g.get_xticklabels(), rotation=45)
+g.set_title("mean points per match for the 20 bests players")
+g.set_xlabel("mean number of points 3 points marked per match")
+g.set_ylabel("player");
+# -
+
+details.columns
+
+fig = px.scatter(details.groupby("player_name")[["fg3m", "fgm"]].sum().reset_index(),\
+                 x="fg3m", y="fgm", hover_data=['player_name'],\
+                 labels={
+                        "fg3m" : "3 points shoot marked",
+                        "fgm" : "2 points shoot marked"
+                }, \
+                title="Relation between the number of 3 points and 2 points shots marked")
+fig.update_layout(width=800, height=800)
+fig.show()
+
+# This graph shows us that Lebron James has absolutely 0 ounce of chill.
+
 g = sns.histplot(data=details, x="min", binwidth=3)
 g.set_title("distribution of the number of ")
 g.set_xlabel("minutes played")
@@ -180,7 +250,7 @@ ranking
 # -
 
 g = sns.countplot(data=ranking[ranking.standingsdate == "2020-12-21"], x="conference")
-g.set_title("")
+g.set_title("number of teams of each conference of the 12/21/2020");
 
 f, a = plt.subplots(figsize=(16, 4))
 plt.plot(ranking.groupby("standingsdate").count().team_id)
@@ -191,16 +261,8 @@ wins_cleveland["Lebron_was_here"] = wins_cleveland.standingsdate.apply(lambda da
 wins_cleveland = wins_cleveland.drop_duplicates().sort_values("standingsdate", ascending=True)
 px.line(wins_cleveland, x="standingsdate", y="w", color="Lebron_was_here", labels={"w" : "wins for Cleveland", "standingsdate" : "date in the season", "Lebron_was_here" : "was Lebron playing at Cleveland ?"}, title="Impact of Lebron on Cleveland wins during a season")
 
+
 # We have one ranking per day. We need to order the team for each of them to extrac the real ranking for each of them.
-
-sub = ranking[ranking.standingsdate == "2022-03-12"]
-
-sub_sorted = sub.sort_values("w", ascending=False).reset_index()
-sub_sorted["rank"] = sub_sorted.index + 1
-sub_sorted = sub_sorted.set_index("index")
-
-sub_sorted
-
 
 # +
 def find_ranking(daily_scores):
@@ -209,19 +271,29 @@ def find_ranking(daily_scores):
     sub_sorted = sub_sorted.set_index("index")
     return sub_sorted
     
+from senpy import notify_me
+
 
 ranking = ranking.groupby("standingsdate").apply(lambda subdf : find_ranking(subdf))
+notify_me("ranking computation done")
 # -
 
 ranking.to_csv("../data/preprocessed/rankings.csv")
 
 # ### 4 - Teams
+#
+#
+# This can helps add some data about the team later but isn't so useful by itself.
 
 teams
 
 ## do smthg
 display(teams[teams.TEAM_ID == 1610612744])
 display(teams[teams.TEAM_ID == 1610612757])
+teams.columns = [col.lower() for col in teams.columns]
+teams["name"] = teams["city"] + " " + teams["nickname"]
+
+teams.name.drop_duplicates()
 
 sns.histplot(data=teams, x="YEARFOUNDED", binwidth=2)
 
