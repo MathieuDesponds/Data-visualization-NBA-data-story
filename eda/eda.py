@@ -29,6 +29,9 @@ def show(df, name):
 [show(df, name) for df, name in dfs];
 
 # ### 1 - Games
+#
+#
+# We start by study the `games` dataset. Each row here corresponds to a game.
 
 # +
 ## quick look at the different columns
@@ -70,7 +73,7 @@ from scipy import stats
 stats.ttest_ind(games.pts_away.dropna(), games.pts_home.dropna())
 # -
 
-# The p-value is $< 0.01$ so we can reject the null-hypothesis saying that these means are the same with a confidence of $99\%$.
+# The p-value is $< 0.01$ so we can reject the null-hypothesis saying that these means are the same with a confidence of $99\%$. This statistic can potentially be explained using other features. We might study this later full project.
 #
 #
 # Here we assess the precision in the 3 points shoots between visitors and host teams :
@@ -131,13 +134,13 @@ games = games.dropna(how="any")
 uninteresting_cols = ["home_team_id", "visitor_team_id", "season", "winner_id", "game_id", "date"]
 sns.pairplot(data=games.drop(uninteresting_cols, axis=1), corner=True)
 
-# **TODO** : write a few insights we get
-
 # We store the cleaned dataset in the `data/preprocessed` directory.
 
 games.to_csv("../data/preprocessed/games.csv")
 
 # ### 2 - Details
+#
+# Now let's study the `details` dataset. This one contains one row per player involved in one game. This gives us information about the actions of each player on the field during a given match.
 
 details.columns = [name.lower() for name in details.columns]
 details
@@ -188,8 +191,6 @@ g.set_ylabel("player");
 
 details["min"] = details["min"].astype(str).apply(lambda x : float(x.split(":")[0]))
 
-details.groupby("player_name")[["pts", "min"]].mean().reset_index()
-
 fig = px.scatter(details.groupby("player_name")[["pts", "min"]].mean().reset_index(),\
                  x="pts", y="min", hover_data=['player_name'],\
                  labels={
@@ -199,8 +200,6 @@ fig = px.scatter(details.groupby("player_name")[["pts", "min"]].mean().reset_ind
                 title="Relation between the average of time played and the number of points scored")
 fig.update_layout(width=800, height=800)
 fig.show()
-
-tea
 
 # +
 f = plt.figure(figsize=(15, 5))
@@ -213,8 +212,6 @@ g.set_title("mean points per match for the 20 bests players")
 g.set_xlabel("mean number of points 3 points marked per match")
 g.set_ylabel("player");
 # -
-
-details.columns
 
 fig = px.scatter(details.groupby("player_name")[["fg3m", "fgm"]].sum().reset_index(),\
                  x="fg3m", y="fgm", hover_data=['player_name'],\
@@ -233,7 +230,9 @@ g.set_title("distribution of the number of ")
 g.set_xlabel("minutes played")
 g.set_ylabel("number of players");
 
-## TODO : explain the investigation
+# During investigation we discovered that a player played 96 minutes in a game. We did our investigation on the precise game
+# and realised this never happened. So we get rid of the row.
+
 details = details.drop(details[details["min"] == 96.0].index[0])
 
 details.to_csv("../data/preprocessed/details.csv")
