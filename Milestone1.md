@@ -14,7 +14,7 @@ Therefore, we will not need much preprocessing and data-cleaning.
 
 ## Problematic
 
-What conditions make a team succesful? What makes player superior? Is there different strategies, trends in strategies?
+What conditions make a team successful? What makes player superior? Is there different strategies, trends in strategies?
 
 We have the following ideas for our data visualization :
 - Show on the US map the travels of a chosen team and relate it with its results
