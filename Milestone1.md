@@ -31,7 +31,7 @@ We were also able to reconstruct the rankings of a date and did a interesting re
 
 Finally, we looked at the foundation of the different teams.
 
-You can find all our results in the _eda.ipynb_ file.
+You can find all our results in the [eda.ipynb](eda/eda_nb.ipynb) file.
 
 ## Related work
 The database has already been use for
