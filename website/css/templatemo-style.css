@@ -65,7 +65,7 @@ a:focus {
 /* Navbar */
 
 .tm-navbar {
-  /* position: fixed; */
+  position: fixed;
   
   width: 100%;
   z-index: 1000;
@@ -123,11 +123,11 @@ a:focus {
 }
 
 .tm-navbar.scroll .navbar-toggler {
-  border: 1px solid #8f8f8f;
+  border: 1px solid #3496d8;
 }
 
 .tm-navbar.scroll .navbar-toggler-icon {
-  color: #8f8f8f;
+  color: #3496d8;
 }
 
 /* Hero */
