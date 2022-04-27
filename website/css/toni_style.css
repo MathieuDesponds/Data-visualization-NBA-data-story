@@ -9,3 +9,11 @@
     height: 100px;
     margin : 25px;
 }
+
+.player_holder {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    height: "100%";
+    width: "100%";
+}
