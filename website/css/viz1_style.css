@@ -1,0 +1,40 @@
+#viz1-container {
+  height : 600px;
+  overflow: hidden; /* will contain if #first is longer than #second */
+  border: 1px solid yellow;
+}
+#viz1-team-selector {
+  width: 20%;
+  height : 100%;
+  float:right; /* add this */
+  border: 1px solid black;
+  overflow: hidden; /* will contain if #first is longer than #second */
+}
+#viz1-left-part {
+  width: 80%;
+  height : 100%;
+  float:left; /* add this */
+  border: 1px solid red;
+  position: relative;
+}
+
+#viz1-bottom {
+  height : 75px;
+  width: 100%;
+  border: 1px solid blue;
+  position: absolute;
+  bottom: 0;
+}
+#viz1-year-selection{
+  width: 30%;
+  height : 100%;
+  float:left; /* add this */
+  border: 1px solid green;
+}
+
+#viz1-timeline{
+  height : 100%;
+  width: 70%;
+  float:right; /* add this */
+  border: 1px solid red;
+}
