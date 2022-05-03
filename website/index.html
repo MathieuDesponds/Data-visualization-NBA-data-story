@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="css/viz1_style.css"/>
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://d3-geomap.github.io/d3-geomap/d3-geomap.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+
   </head>
   <body>
     <!-- Hero section -->
@@ -116,12 +120,12 @@
         </div>
         <div id = "viz1-container">
           <div id = "viz1-left-part">
-            <p id = "chosen-year">
-              Chose a year to start !
-            </p>
-            <p id = "chosen-teams">
-              Chose teams to display !
-            </p>
+            <div id = "viz1-header">
+              <p id = "chosen-year">Chose a year to start !</p>
+              <p id = "chosen-teams">Chose teams to display !  </p>
+            </div>
+
+            <div id = "viz1-map"></div>
             <div id = "viz1-bottom">
               <div id = "viz1-year-selection">
                 <p style="float: left  ">
