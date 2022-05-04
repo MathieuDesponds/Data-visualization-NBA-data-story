@@ -3,7 +3,7 @@
   overflow: hidden; /* will contain if #first is longer than #second */
   border: 1px solid black;
 }
-#viz1-team-selector {
+#viz1-right-part {
   width: 20%;
   height : 100%;
   float:right; /* add this */
@@ -11,7 +11,7 @@
   overflow-y: auto; /* will contain if #first is longer than #second */
 }
 #viz1-left-part {
-  width: 80%;
+  width: 75%;
   height : 100%;
   float:left; /* add this */
   border: 1px solid black;
@@ -39,7 +39,7 @@
   position: absolute;
   bottom: 0;
 }
-#viz1-year-selection{
+#viz1-year-selector{
   width: 30%;
   height : 100%;
   border: 1px solid black;
@@ -49,5 +49,29 @@
   height : 100%;
   width: 70%;
   float:right; /* add this */
+  border: 1px solid black;
+}
+
+
+#viz1-right-part {
+  width: 25%;
+  height : 100%;
+  float:right; /* add this */
+  border: 1px solid black;
+
+}
+
+#viz1-team-selector {
+  width: 100%;
+  height : 35%;
+  border: 1px solid black;
+  overflow-y: auto; /* will contain if #first is longer than #second */
+}
+
+#viz1-period-selector {
+  border: 1px solid black;
+}
+
+#viz1-viz1-statistics {
   border: 1px solid black;
 }

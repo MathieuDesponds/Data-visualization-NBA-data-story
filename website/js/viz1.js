@@ -1,4 +1,4 @@
-var width = 962,
+var width = 900,
         rotated = 90,
         height = 502;
 
@@ -103,39 +103,10 @@ var width = 962,
 
   }
 
-  function drawLabels() {
-        // white shadow
-        map.svg.append("g").attr('class', 'zoom')
-            .selectAll("text")
-            .data(topojson.feature(map.geo, map.geo.objects.units).features)
-            .enter().append("text")
-            .attr("class", "place-label shadow")
-            .style("font-size", "8px")
-            .attr("x", function(d) { return map.path.centroid(d)[0]; })
-            .attr("y", function(d) { return map.path.centroid(d)[1]+4; })
-            .attr("text-anchor","middle")
-            .text(function(d) { return csv[d.properties.name].num; })
-            .on('click', map.clicked.bind(map));
-
-        // black text
-        map.svg.append("g").attr('class', 'zoom')
-            .selectAll("text")
-            .data(topojson.feature(map.geo, map.geo.objects.units).features)
-            .enter().append("text")
-            .attr("class", "place-label")
-            .style("font-size", "8px")
-            .attr("x", function(d) { return map.path.centroid(d)[0]; })
-            .attr("y", function(d) { return map.path.centroid(d)[1]+4; })
-            .attr("text-anchor","middle")
-            .text(function(d) { return csv[d.properties.name].num; })
-            .on('click', map.clicked.bind(map));
-    }
-
-
 
 function showYearSelection(){
   let years = [...Array(19).keys()].map(i => 2021-i)
-  var dropdownButton = d3.select("#viz1-year-selection")
+  var dropdownButton = d3.select("#viz1-year-selector")
     .append('select')
   // add the options to the button
   dropdownButton // Add a button
@@ -160,6 +131,35 @@ showYearSelection()
 
     // XXX:
 //_-------------------------------------------------------//
+
+
+function showPeriodForStatisticsSelection(){
+  let nb_matches = [1,2,5,10,20,"Whole season"]
+  var dropdownButton = d3.select("#viz1-period-selector")
+    .append('select')
+  // add the options to the button
+  dropdownButton // Add a button
+    .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
+   	.data(nb_matches)
+    .style("float", "right")
+    .enter()
+  	.append('option')
+    .text(function (d) { return d; }) // text showed in the menu
+    .attr("value", function (d) { return d; }) // corresponding value returned by the butto
+
+  dropdownButton.on("change", function(d) {
+      updatePeriod(d3.select(this).property("value"))
+  })
+  function updatePeriod(nb_matches){
+    // d3.select("#chosen-year")
+    //   .text(`The year chosen is ${year}`)
+  }
+}
+showPeriodForStatisticsSelection()
+
+
+    // XXX:
+//_-------------------------------------------------------//
 class Team{
     constructor(name, id, abbreviation, lat, long){
         this.name = name;
@@ -171,7 +171,7 @@ class Team{
 }
 
 var chosenTeams = new Set()
-d3.csv('https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/website/data/teams_summary.csv', (data) => {
+d3.csv('https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/teams_summary.csv', (data) => {
   teams = data.map(team => new Team(team["NICKNAME"], parseInt(team["TEAM_ID"]), team["ABBREVIATION"],parseInt(team["LATITUDE"]),parseInt(team["LONGITUDE"])))
   showTeams(teams)
   })
@@ -212,8 +212,14 @@ function updateChosenTeams(d, add){
   }else{
     chosenTeams.delete(d.name)
   }
-  let text = "The teams chosen are ";
-  chosenTeams.forEach (value => text += value+ ", ")
+  let text = ""
+  if(chosenTeams.size == 0){
+    text = "Chose teams to display !"
+  }else{
+    text = "The teams chosen are ";
+    chosenTeams.forEach (value => text += value+ ", ")
+    text = text.slice(0,-2)
+  }
   d3.select("#chosen-teams")
-    .text(`${text.slice(0,-2)}`)
+    .text(`${text}`)
 }

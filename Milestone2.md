@@ -1,7 +1,10 @@
 # Milestone 2
 
 ## Visualization 1
-The goal of the visualization is to show the travels of the different teams during the season. See the number of kilometers it travels and if we have time the impact it can have on the results.
+The goal of the visualization is to show the travels of the different teams during the season. See the number of kilometers it travels and the impact it can have on the results.
+For this, we will let the user chose a set of teams that will be put on the map and will move following the journeys they did during the season.
+Moreover, there will be a table with the statistics of these teams that show the number of kilometers and the number of points it did during the last period selected.
+ 
 
 ### Sketch
 ![sketch viz1]('https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/sketches/MVP_viz1.png')
@@ -17,10 +20,15 @@ The goal of the visualization is to show the travels of the different teams duri
 #### MVP
 - Team selector : load the teams in the database and put checkboxes for each of them. Then if the team is selected add it to the header
 - Year selector : add a selector button with the different years to chosen
+- Period considered selector :
 - Timeline of the season by teams : by teams load the location of their match during the season.
 - Map : use the [tutorial](https://bost.ocks.org/mike/map/) to draw a map of the US and Canada. Add the labels of the teams on the map with their logo. Make the teams move on the map. Add the kilometers it has moved.
-#### Additional features
 - Show the link between the numbers of kilometers by the number of points or the ranks it gained/lost during the last period of time.
+
+
+#### Additional features
+- Show the results of the match when the team is in the city with an animation if it has lost or win
+
 
 ## Visualization 2
 
