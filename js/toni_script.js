@@ -15,7 +15,7 @@ class Player{
     }
 }
 
-d3.csv(`https://github.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/blob/master/website/data/player_selection.csv`, (data) => {
+d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/website/data/player_selection.csv`, (data) => {
     console.log("data :")
     console.log(data)
     sampleFaces = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"]))
