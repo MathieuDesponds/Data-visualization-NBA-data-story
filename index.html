@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Lebron Jenkins</title>
+    <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
+    <link rel="stylesheet" href="slick/slick.css">
+    <link rel="stylesheet" href="slick/slick-theme.css">
+    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/templatemo-style.css" />
+    <link rel="stylesheet" href="css/toni_style.css"/>
+    <link rel="stylesheet" href="css/viz1_style.css"/>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script src="https://d3-geomap.github.io/d3-geomap/d3-geomap.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+  </head>
+  <body>
+    <!-- Hero section -->
+    <section id="hero" class="text-white tm-font-big tm-parallax">
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">
+        <div class="container">
+          <div class="tm-next">
+              <a href="https://github.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins" class="navbar-brand">Lebron Jenkins</a>
+          </div>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars navbar-toggler-icon"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="#introduction">Introduction</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="#viz1">Viz 1</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="#viz2">Viz 2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link tm-nav-link" href="#viz3">Viz 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link tm-nav-link" href="#viz4">Viz 4</a>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="text-center tm-hero-text-container">
+        <div class="tm-hero-text-container-inner">
+            <h2 class="tm-hero-title">NBA visualized</h2>
+            <p class="tm-hero-subtitle">
+              the NBA from 2003 to 2020
+              <br />by Lebron Jenkins
+            </p>
+        </div>
+      </div>
+
+      <div class="tm-next tm-intro-next">
+        <a href="#introduction" class="text-center tm-down-arrow-link">
+          <i class="fas fa-3x fa-caret-down tm-down-arrow"></i>
+        </a>
+      </div>
+    </section>
+
+
+    <!------------------------------------------ INTRODUCTION  ---------------------------------------->
+    <section id="introduction" class="tm-section-pad-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="https://wallpaperaccess.com/full/2872553.jpg" alt="Image" class="img-fluid tm-intro-img" />
+          </div>
+          <div class="col-lg-6">
+            <div class="tm-intro-text-container">
+                <h2 class="tm-text-primary mb-4 tm-section-title">Introduction</h2>
+                <p class="mb-4 tm-intro-text">
+                  This is our website where we are going to analyse <strong>the NBA from 2003 to 2020</strong>.
+                  Built on a dataset containing all the statistics of every player involved in every game during these seasons.
+                  What conditions make a team successful? What makes player superior? Is there different strategies, trends in strategies?
+                  The target audience will be the NBA fans that love stats. Moreover, the movement on the map will be attractive</p>
+                <div class="tm-next">
+                  <a href="https://www.kaggle.com/datasets/nathanlauga/nba-games" class="tm-intro-text tm-btn-primary">Read More</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row tm-section-pad-top">
+            <div style="align-items: center; justify-content: center; width:100%;">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tortor dui, suscipit sed augue a, sodales ultricies felis. Vivamus viverra dictum lacus, ut consectetur neque posuere in. Nunc a condimentum lacus, in pellentesque elit. Fusce lobortis ac quam quis congue. Maecenas eget mauris nec felis mollis rutrum ac et ex. Aenean vel elit tincidunt, consectetur mauris vitae, faucibus sem. Suspendisse potenti. Vivamus cursus nibh leo, a aliquam ex viverra vitae. Curabitur velit quam, vulputate ut pellentesque a, porttitor sit amet nibh. Suspendisse at nulla dolor. Vivamus pharetra, justo a viverra vulputate, risus nunc pulvinar sem, finibus mattis orci lacus non enim. Vestibulum eros mauris, lacinia vel justo eget, eleifend egestas eros.
+            </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!---------------------------------------------- Viz ----------------------------------------->
+    <section id="viz1" class="tm-section-pad-top">
+      <div class="row">
+        <div class="text-center col-12">
+            <h2 class="tm-text-primary tm-section-title mb-4">Viz 1</h2>
+        </div>
+      </div>
+      <div class="container tm-container-gallery">
+        <div id = "viz1-container">
+          <div id = "viz1-left-part">
+            <div id = "viz1-header">
+              <p id = "chosen-year">Chose a year to start !</p>
+              <p id = "chosen-teams">Chose teams to display !  </p>
+            </div>
+
+            <div id = "viz1-map"></div>
+            <div id = "viz1-bottom">
+              <div id = "viz1-year-selector" class = "viz1-selector-button">
+                <p>
+                  Chose a season :
+                </p>
+              </div>
+              <div id ="viz1-timeline">
+
+              </div>
+            </div>
+          </div>
+          <div id = "viz1-right-part">
+            <div id="viz1-team-selector"></div>
+            <div id="viz1-period-selector" class = "viz1-selector-button">
+              <p>
+                Chose the period for the statistics :
+              </p>
+            </div>
+            <div id="viz1-statistics">
+              <p>
+                Teams      nb_kil   delta(pts)
+              </p>
+              <p>
+                Hawks       2125        5
+              </p><p>
+                Bulls       8546        2
+              </p>
+            </div>
+          </div>
+        </div>
+    </section>
+    <!------------------------------------------- END OF VIZ ------------------------------------------------->
+
+
+        <!---------------------------------------------- Viz ----------------------------------------->
+        <section id="viz2" class="tm-section-pad-top">
+            <div class="container tm-container-gallery">
+              <div class="row">
+                <div class="text-center col-12">
+                    <h2 class="tm-text-primary tm-section-title mb-4">Viz 2</h2>
+                    <p class="mx-auto tm-work-description">
+                      "Curabitur ac orci ac lorem blandit volutpat. Sed ac sodales nibh, ut
+                      porttitor elit. Sed id dui mi. Vestibulum ante ipsum primis in faucibus
+                      orci luctus et ultrices posuere cubilia."
+                    </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!------------------------------------------- END OF VIZ ------------------------------------------------->
+
+              <!---------------------------------------------- Viz ----------------------------------------->
+    <section id="viz3" class="tm-section-pad-top">
+        <div class="container tm-container-gallery">
+          <div class="row">
+            <div class="text-center col-12">
+                <h2 class="tm-text-primary tm-section-title mb-4">Viz 3</h2>
+                <p class="mx-auto tm-work-description">
+                  "Curabitur ac orci ac lorem blandit volutpat. Sed ac sodales nibh, ut
+                  porttitor elit. Sed id dui mi. Vestibulum ante ipsum primis in faucibus
+                  orci luctus et ultrices posuere cubilia."
+                </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!------------------------------------------- END OF VIZ ------------------------------------------------->
+
+          <!---------------------------------------------- Viz ----------------------------------------->
+    <section id="viz4" class="tm-section-pad-top">
+        <div class="container tm-container-gallery">
+          <div class="row">
+            <div class="text-center col-12">
+                <h2 class="tm-text-primary tm-section-title mb-4">Viz 4</h2>
+                <p class="mx-auto tm-work-description">
+                  "Curabitur ac orci ac lorem blandit volutpat. Sed ac sodales nibh, ut
+                  porttitor elit. Sed id dui mi. Vestibulum ante ipsum primis in faucibus
+                  orci luctus et ultrices posuere cubilia."
+                </p>
+            </div>
+
+            <!-- PLAYER SELECTOR -->
+            <div id="player-selector" style="width:100%; margin:10%; height: 400px;">
+              <div style="display:flex; flex-direction: row; justify-content: space-between;">
+                <p>Chose a player :</p>
+                <!-- BUTTONS :-->
+                <div style="display:flex; flex-direction:row; justify-content:center; padding:10px">
+                  <button class="page_selection_button" onclick="pageSelection(1);">1</button>
+                  <button class="page_selection_button" onclick="pageSelection(2);">2</button>
+                  <button class="page_selection_button" onclick="pageSelection(3);">3</button>
+                  <button class="page_selection_button" onclick="pageSelection(4);">4</button>
+                  <button class="page_selection_button" onclick="pageSelection(5);">5</button>
+                  <button class="page_selection_button" onclick="pageSelection(1);">6</button>
+                  <button class="page_selection_button" onclick="pageSelection(2);">7</button>
+                  <button class="page_selection_button" onclick="pageSelection(3);">8</button>
+                  <button class="page_selection_button" onclick="pageSelection(4);">9</button>
+                  <button class="page_selection_button" onclick="pageSelection(5);">10</button>
+                </div>
+              </div>
+              <div style="width: 100%; height : 100%; background-color: #d8d8d8 ; border-radius: 10px; margin:10px; display:flex; justify-content:space-evenly; flex-direction: column;" id="player-faces-container">
+                <div style="width : 100%; display:flex; justify-content: space-between; align-items: space-between;" id="player-faces-row1"></div>
+                <div style="width: 100%; display:flex; justify-content: space-between; align-items: space-between;" id="player-faces-row2"></div>
+              </div>
+
+            </div>
+          </div>
+      </section>
+      <!------------------------------------------- END OF VIZ ------------------------------------------------->
+
+
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="slick/slick.min.js"></script>
+    <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.singlePageNav.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/toni_script.js"></script>
+    <script src="js/viz1.js"></script>
+
+    <script>
+
+      function getOffSet(){
+        var _offset = 450;
+        var windowHeight = window.innerHeight;
+
+        if(windowHeight > 500) {
+          _offset = 400;
+        }
+        if(windowHeight > 680) {
+          _offset = 300
+        }
+        if(windowHeight > 830) {
+          _offset = 210;
+        }
+
+        return _offset;
+      }
+
+      function setParallaxPosition($doc, multiplier, $object){
+        var offset = getOffSet();
+        var from_top = $doc.scrollTop(),
+          bg_css = 'center ' +(multiplier * from_top - offset) + 'px';
+        $object.css({"background-position" : bg_css });
+      }
+
+      // Parallax function
+      // Adapted based on https://codepen.io/roborich/pen/wpAsm
+      var background_image_parallax = function($object, multiplier, forceSet){
+        multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+        multiplier = 1 - multiplier;
+        var $doc = $(document);
+        // $object.css({"background-attatchment" : "fixed"});
+
+        if(forceSet) {
+          setParallaxPosition($doc, multiplier, $object);
+        } else {
+          $(window).scroll(function(){
+            setParallaxPosition($doc, multiplier, $object);
+          });
+        }
+      };
+
+      var background_image_parallax_2 = function($object, multiplier){
+        multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+        multiplier = 1 - multiplier;
+        var $doc = $(document);
+        $object.css({"background-attachment" : "fixed"});
+        $(window).scroll(function(){
+          var firstTop = $object.offset().top,
+              pos = $(window).scrollTop(),
+              yPos = Math.round((multiplier * (firstTop - pos)) - 186);
+
+          var bg_css = 'center ' + yPos + 'px';
+
+          $object.css({"background-position" : bg_css });
+        });
+      };
+
+      $(function(){
+        // Hero Section - Background Parallax
+        background_image_parallax($(".tm-parallax"), 0.30, false);
+        background_image_parallax_2($("#contact"), 0.80);
+
+        // Handle window resize
+        window.addEventListener('resize', function(){
+          background_image_parallax($(".tm-parallax"), 0.30, true);
+        }, true);
+
+        // Detect window scroll and update navbar
+        $(window).scroll(function(e){
+          if($(document).scrollTop() > 120) {
+            $('.tm-navbar').addClass("scroll");
+          } else {
+            $('.tm-navbar').removeClass("scroll");
+          }
+        });
+
+        // Close mobile menu after click
+        $('#tmNav a').on('click', function(){
+          $('.navbar-collapse').removeClass('show');
+        })
+
+        // Scroll to corresponding section with animation
+        $('#tmNav').singlePageNav();
+
+        // Add smooth scrolling to all links
+        // https://www.w3schools.com/howto/howto_css_smooth_scroll.asp
+        $("a").on('click', function(event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 400, function(){
+              window.location.hash = hash;
+            });
+          } // End if
+        });
+
+        // Pop up
+        $('.tm-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          gallery: { enabled: true }
+        });
+
+        // Gallery
+        $('.tm-gallery').slick({
+          dots: true,
+          infinite: false,
+          slidesToShow: 5,
+          slidesToScroll: 2,
+          responsive: [
+          {
+            breakpoint: 1199,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+        });
+      });
+    </script>
+  </body>
+</html>
