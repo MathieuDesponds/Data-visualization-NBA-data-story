@@ -123,7 +123,7 @@ function drop(e) {
     e.target.appendChild(draggable);
     console.log(e.target.children);
 }
-
+/*
 // dummy hist for winning team
 var margin = {top: 20, right: 30, bottom: 40, left: 90},
     width = 460 - margin.left - margin.right,
@@ -172,3 +172,5 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     .attr("height", y.bandwidth() )
     .attr("fill", "#69b3a2")
 });
+
+*/
