@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/templatemo-style.css" />
-    <link rel="stylesheet" href="css/toni_style.css"/>
+    <link rel="stylesheet" href="css/viz4_style.css"/>
     <link rel="stylesheet" href="css/viz1_style.css"/>
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
@@ -175,12 +175,26 @@
         <div class="container tm-container-gallery">
           <div class="row">
             <div class="text-center col-12">
-                <h2 class="tm-text-primary tm-section-title mb-4">Viz 3</h2>
-                <p class="mx-auto tm-work-description">
-                  "Curabitur ac orci ac lorem blandit volutpat. Sed ac sodales nibh, ut
-                  porttitor elit. Sed id dui mi. Vestibulum ante ipsum primis in faucibus
-                  orci luctus et ultrices posuere cubilia."
-                </p>
+                <h2 class="tm-text-primary tm-section-title mb-4">Fantasy Basketball</h2>
+                <div id="basketball-field">                  
+                  <h1>Make your team with players below</h1>
+                  <div class="drop-targets" id="team-left">
+                      <div class="field-player" id="field-player_0"></div>
+                      <div class="field-player" id="field-player_1"></div>
+                      <div class="field-player" id="field-player_2"></div>
+                      <div class="field-player" id="field-player_3"></div>
+                      <div class="field-player" id="field-player_4"></div>
+                  </div>
+                  <div class="drop-targets" id="team-right">
+                      <div class="field-player" id="field-player_0"></div>
+                      <div class="field-player" id="field-player_1"></div>
+                      <div class="field-player" id="field-player_2"></div>
+                      <div class="field-player" id="field-player_3"></div>
+                      <div class="field-player" id="field-player_4"></div>
+                  </div>
+                  <h2>Awesome statistics</h2>
+                  <div id="team-stats"></div>
+                </div>
             </div>
           </div>
         </div>
@@ -234,8 +248,9 @@
     <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
     <script src="js/jquery.singlePageNav.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/toni_script.js"></script>
+    <script src="js/viz4.js"></script>
     <script src="js/viz1.js"></script>
+
 
     <script>
 

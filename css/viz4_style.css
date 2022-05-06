@@ -1,0 +1,61 @@
+.page_selection_button {
+	border-radius: 30px; 
+	margin: 5px; 
+	background-color: #e9e9e9;
+	border-color:#d8d8d8;
+}
+
+.player_faces {
+    height: 100px;
+    margin : 25px;
+}
+
+.player_holder {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    height: "100%";
+    width: "100%";
+}
+
+#basketball-field{
+    background-image: url("basketball-field-image.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    aspect-ratio: 3/2;
+    border:solid;
+    flex-direction: column;
+}
+
+/* remove all of this later */
+.drop-targets {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    vertical-align: middle;
+    margin: 20px 0;
+}
+
+.field-player {
+    height: 150px;
+    width: 150px;
+    border: solid 10px #ccc;
+    margin: 10px;
+
+    /* align items in the box */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.drag-over {
+    border: dashed 3px red;
+}
+
+.hide{
+    display: none;
+}
