@@ -41,7 +41,7 @@
 }
 #viz1-year-selector{
   width: 30%;
-  height : 100%;
+  height : 100px;
   border: 1px solid black;
 }
 
@@ -74,4 +74,13 @@
 
 #viz1-statistics {
   border: 1px solid black;
+}
+.subunit.USB { fill: #dcd; }
+.subunit.CAN { fill: #ddc; }
+
+.subunit-boundary {
+  fill: none;
+  stroke: #777;
+  stroke-dasharray: 2,2;
+  stroke-linejoin: round;
 }
