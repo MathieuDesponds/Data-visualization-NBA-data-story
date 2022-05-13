@@ -1,4 +1,4 @@
-import Team from './Team.js'
+import Team from './js/Team.js'
 
 var width = 960,
     height = 1160;
@@ -6,7 +6,7 @@ var svg = d3.select("#viz1-map").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-var teams = Team.load_teams()
+
 d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data/map/na.json", function(error, na) {
   if (error) return console.error(error);
   var projection = d3.geo.albers().scale(800)
@@ -41,7 +41,7 @@ d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pr
           .data(teams)
         .enter().append("text")
           .attr("class", "place-label")
-          .attr("transform", function(d) { return "translate(" + projection([d.coordinates) + ")"; })
+          .attr("transform", function(d) { return "translate(" + projection(d.coordinates) + ")"; })
           .attr("dy", ".35em")
           .text(function(d) { return d.name; });
 

@@ -1,4 +1,6 @@
-import Team from './Team.js'
+import Team from './Teams.js';
+
+console.log(Team.TEAM_FILE);
 
 function showYearSelection(){
   let years = [...Array(19).keys()].map(i => 2021-i)
@@ -59,9 +61,12 @@ showPeriodForStatisticsSelection()
 
 
 var chosenTeams = new Set()
-showTeams(Team.load_teams())
+//showTeams(Team.load_teams())
+// d3.csv('https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/teams_summary.csv',
+//  (data) => showTeams(data.map(team => new Team(team["NICKNAME"], parseInt(team["TEAM_ID"]), team["ABBREVIATION"],parseInt(team["LATITUDE"]),parseInt(team["LONGITUDE"])))))
 
 function showTeams(data){
+  console.log("E")
   var teamSelector = d3.select("#viz1-team-selector");
   var teamButton =
       teamSelector
