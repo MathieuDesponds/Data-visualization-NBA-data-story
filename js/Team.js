@@ -7,6 +7,10 @@ class Team{
         this.long = long;
     }
 
+    coordinates(){
+      return [this.long, this.lat]
+    }
+
     static load_teams(){
       return d3.csv('https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/teams_summary.csv',
        (data) => data.map(team => new Team(team["NICKNAME"], parseInt(team["TEAM_ID"]), team["ABBREVIATION"],parseInt(team["LATITUDE"]),parseInt(team["LONGITUDE"])))
