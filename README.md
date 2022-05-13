@@ -1,5 +1,7 @@
 # Study of the NBA data by Lebron Jenkins team
 
+website prototype link:
+https://com-480-data-visualization.github.io/datavis-project-2022-lebron-jenkins/ 
 
 Folder : 
 
