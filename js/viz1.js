@@ -2,7 +2,7 @@ import Team from './Team.js';
 
 function showYearSelection(){
   let years = [...Array(19).keys()].map(i => 2021-i)
-  var dropdownButton = d3.select("#viz1-period-selector")
+  var dropdownButton = d3.select("#viz1-year-selector")
     .append('select')
   // add the options to the button
   dropdownButton // Add a button
@@ -87,6 +87,7 @@ function showTeams(data){
   //     .attr('width', 200)
 
   d3.selectAll(".checkboxes").on("click", function(d) {
+    console.log("clicked "+d.name)
       updateChosenTeams(d, d3.select(this).property("checked"))
   })
 }
@@ -99,6 +100,7 @@ function updateChosenTeams(d, add){
     chosenTeams.delete(d.name)
   }
   let text = ""
+  console.log(chosenTeams.size)
   if(chosenTeams.size == 0){
     text = "Chose teams to display !"
   }else{

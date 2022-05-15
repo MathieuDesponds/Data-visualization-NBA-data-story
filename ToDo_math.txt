@@ -1,0 +1,9 @@
+Séparer les nom des villes semblables
+Mettre le curseur du temps 
+Créer un path ! avec les heats de 2003
+
+On click qui marche pas bien pour les checkboxes
+
+
+Prendre le mexique aussi
+Réussir à mettre les états avec les noms derrières 

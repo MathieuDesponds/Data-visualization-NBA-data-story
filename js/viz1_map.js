@@ -1,7 +1,7 @@
 import Team from './Team.js';
 
 var width = 960,
-    height = 1160;
+    height = 450;
 var svg = d3.select("#viz1-map").append("svg")
     .attr("width", width)
     .attr("height", height);
@@ -45,6 +45,7 @@ d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pr
           .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
       		.attr("r", "8px")
       		.attr("fill", "red")
+
         svg.selectAll(".place-label")
           .data(teams)
         .enter().append("text")
