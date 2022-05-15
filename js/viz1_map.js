@@ -1,4 +1,4 @@
-import Team from './js/Team.js'
+import Team from './Team.js';
 
 var width = 960,
     height = 1160;
@@ -29,20 +29,29 @@ d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pr
        .attr("class", "subunit-boundary");
 
        //Add points for the cities on the map
-      svg.append("path")
-          .datum(topojson.feature(na, na.objects.places))
-          .filter(d => d.properties.name === "Los Angeles")
-          .attr("d", path)
-          .attr("class", "place");
+      // svg.append("path")
+      //     .datum(topojson.feature(na, na.objects.places))
+      //     .attr("d", path)
+      //     .attr("class", "place");
 
 
       //Add label to places
-      svg.selectAll(".place-label")
+      d3.csv(Team.TEAM_FILE,(data) => {
+        var teams = data.map(team => new Team(team));
+        svg.selectAll("circle")
+    		  .data(teams)
+        .enter()
+      		.append("circle")
+          .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
+      		.attr("r", "8px")
+      		.attr("fill", "red")
+        svg.selectAll(".place-label")
           .data(teams)
         .enter().append("text")
           .attr("class", "place-label")
-          .attr("transform", function(d) { return "translate(" + projection(d.coordinates) + ")"; })
+          .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
           .attr("dy", ".35em")
           .text(function(d) { return d.name; });
+        })
 
 });
