@@ -2,8 +2,9 @@ var formatDateIntoYear = d3.timeFormat("%Y");
 var formatDate = d3.timeFormat("%b %Y");
 var parseDate = d3.timeParse("%m/%d/%y");
 
-var startDate = new Date("2003-10-07"),
-    endDate = new Date("2004-05-18");
+const startDate = new Date("2003-10-07"),
+    endDate = new Date("2004-05-18"),
+    NB_DAYS = Math.ceil((endDate-startDate) / (1000 * 60 * 60 * 24)); ;
 
 var margin = {top:50, right:50, bottom:0, left:50},
     width = 550 - margin.left - margin.right,
@@ -88,7 +89,7 @@ var svg = d3.select("#viz1-timeline")
 
   function step() {
     update(x.invert(currentValue));
-    currentValue = currentValue + (targetValue/151);
+    currentValue = currentValue + (targetValue/NB_DAYS);
     if (currentValue > targetValue) {
       moving = false;
       currentValue = 0;
