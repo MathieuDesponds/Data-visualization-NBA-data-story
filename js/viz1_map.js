@@ -46,19 +46,36 @@ d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pr
       var pathProj = d3.geoPath()
         .projection(projection)
       var link =   [
-                    {type: "LineString", coordinates: [[-84.39619973311765, 33.75725092895011], [-71.06264504509178, 42.36610686544133]]},
+                    {type: "LineString", coordinates: [[-84.39619973311765, 33.75725092895011], [-71.06264504509178, 42.36610686544133],[-71.06264504509178, 42.36610686544133]]},
                     {type: "LineString", coordinates: [[-71.06264504509178, 42.36610686544133], [-90.08072646871527, 29.950485009327856]]},
                     {type: "LineString", coordinates: [[-90.08072646871527, 29.950485009327856], [-87.6728455633052, 41.881968536545465]]}
                   ]
-        // Add the path
-      svg.selectAll("myPath")
-        .data(link)
-        .enter()
-        .append("path")
-          .attr("d", function(d){ return path(d)})
-          .style("fill", "none")
-          .style("stroke", "orange")
-          .style("stroke-width", 4)
+          // Add the path
+          var path = svg.append("path")
+                .attr("d", path(link[0]))
+                .style("fill", "none")
+                .style("stroke", "orange")
+                .style("stroke-width", 7)
+          // Get the length of the path, which we will use for the intial offset to "hide"
+          // the graph
+          const length = path.node().getTotalLength();
+          function repeat() {
+              // Animate the path by setting the initial offset and dasharray and then transition the offset to 0
+                path
+                  .attr("stroke-dasharray", length + " " + length)
+                  .attr("stroke-dashoffset", length)
+                    .transition()
+                    .ease(d3.easeLinear)
+                    .style("stroke", "orange")
+                    .attr("stroke-dashoffset", 0)
+                    .duration(500)
+                    .on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second
+
+            };
+
+            // Animate the graph for the first time
+            repeat();
+
 
 
 });

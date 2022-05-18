@@ -1,5 +1,3 @@
-
-Faire un path sur la carte entre deux villes pour la saison de Miami
 Animer le path
 
 Séparer les nom des villes semblables
@@ -9,3 +7,8 @@ On click qui marche pas bien pour les checkboxes
 
 Prendre le mexique aussi
 Réussir à mettre les états avec les noms derrières 
+
+
+Hello, 
+Au weekend cousin, je t'avais dit qu'on avait un pojet sur le basket et que sans vraiment bien connaitre on essaie des trucs, est ce que tu serais toujours chaud de vite fait m'aider ? 
+Et en gros ce qu'on aimerait faire c'est voir à quel point une stat est importante pour un joueur qui joue à chaque poste, en gros quelles stats il faut regarder pour un poste pour voir s'il a bien joué/est fort. 
