@@ -1,6 +1,6 @@
 import Team from './Team.js';
 
-var width = 960,
+var width = 900,
     height = 480;
 var svg = d3.select("#viz1-map").append("svg")
     .attr("width", width)
@@ -57,7 +57,6 @@ d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pr
           link.push(topush)
           last_loc = row
         })
-        console.log(locations[0])
         // Add the path
       svg.selectAll("myPath")
         .data(link)

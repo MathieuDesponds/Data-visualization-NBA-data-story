@@ -87,7 +87,6 @@ function showTeams(data){
   //     .attr('width', 200)
 
   d3.selectAll(".checkboxes").on("click", function(d) {
-    console.log("clicked "+d.name)
       updateChosenTeams(d, d3.select(this).property("checked"))
   })
 }
@@ -100,7 +99,6 @@ function updateChosenTeams(d, add){
     chosenTeams.delete(d.name)
   }
   let text = ""
-  console.log(chosenTeams.size)
   if(chosenTeams.size == 0){
     text = "Chose teams to display !"
   }else{
