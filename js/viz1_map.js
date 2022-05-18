@@ -11,20 +11,7 @@ const path = d3.geo.path()
   .projection(projection);
 
 
-// drawMap()
-//   .then((res)=> drawCities())
-//   .then((res)=> drawPaths())
-//   .catch(err => { console.log(err) });
- const draw = async() =>{
-  await drawMap()
-  await drawCities()
-  await drawPaths()
-
-}
-draw()
-
-function drawMap(){
-  return new Promise((resolve, reject) => {
+export function drawMap(){
     d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data/map/na.json", function(error, na) {
     if (error) return console.error(error);
 
@@ -40,12 +27,10 @@ function drawMap(){
          .attr("d", path)
          .attr("class", "subunit-boundary");
   });
-  resolve()
-})
 
 }
 //Add label to places
-function drawCities(){
+export function drawCities(){
   return new Promise((resolve, reject) => {
     d3.csv(Team.TEAM_FILE,(data) => {
     var teams = data.map(team => new Team(team));
@@ -69,7 +54,7 @@ function drawCities(){
   })
 }
 
-function drawPaths(){
+export function drawPaths(){
     return new Promise((resolve, reject) => {
     var link =   [
                   {type: "LineString", coordinates: [[-84.39619973311765, 33.75725092895011], [-71.06264504509178, 42.36610686544133]]},
