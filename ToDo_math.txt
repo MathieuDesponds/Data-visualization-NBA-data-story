@@ -1,14 +1,23 @@
-Animer le path
+Dans vizmap
+- créer le link avec tous les déplacements 
+- faire une fonction qui prend en argument le # deplacement à display et le display
+- Automatiser ça avec une boucle ou un truc pour que toute les secondes y'ait un nouveau déplacement
 
+
+Dans selectors
+- comprendre pourquoi ça marche plus les checkbox (la variables add ne marche pas je crois mais ça marchait avant)
+
+Quand on appuie sur le bouton play :
+- on charge la saison de/des teams et on display ça sur la map
+- Faire que le curseur avance en même temps et s'il est bougé revient en arrière
+
+Sur le côté :
+- charger les statistics des teams avec leur kilomètre et les+- de leur point 
+- y display sous forme de tableau 
+
+Regarder pourquoi le début des paths est pas exactement sur le point des villes
 Séparer les nom des villes semblables
-
-On click qui marche pas bien pour les checkboxes
 
 
 Prendre le mexique aussi
 Réussir à mettre les états avec les noms derrières 
-
-
-Hello, 
-Au weekend cousin, je t'avais dit qu'on avait un pojet sur le basket et que sans vraiment bien connaitre on essaie des trucs, est ce que tu serais toujours chaud de vite fait m'aider ? 
-Et en gros ce qu'on aimerait faire c'est voir à quel point une stat est importante pour un joueur qui joue à chaque poste, en gros quelles stats il faut regarder pour un poste pour voir s'il a bien joué/est fort. 
