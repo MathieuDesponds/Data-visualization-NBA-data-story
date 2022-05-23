@@ -1,4 +1,5 @@
 import Team from './Team.js';
+var d3=d3v3;
 
 var width = 900,
     height = 480;
@@ -10,7 +11,7 @@ var projection = d3.geo.albers().scale(800)
 var path = d3.geo.path()
   .projection(projection);
 
-d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data/map/na.json", function(error, na) {
+d3v3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data/map/na.json", function(error, na) {
   if (error) return console.error(error);
 
       svg.selectAll(".subunit")
