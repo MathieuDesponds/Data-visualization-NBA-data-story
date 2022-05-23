@@ -18,6 +18,13 @@
     width: "100%";
 }
 
+#team-stats {
+    justify-content: center;
+    align-items: center;
+    height: "100%";
+    width: "100%";
+}
+
 #basketball-field{
     background-image: url("basketball-field-image.jpg");
     background-size: contain;
