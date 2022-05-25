@@ -19,20 +19,20 @@ var svg = d3.select("#viz1-timeline")
     .attr("height", height + margin.top + margin.bottom);
     ////////// slider //////////
 
-    var moving = false;
-    var currentValue = 0;
-    var targetValue = width;
-    var timer = 0;
-    var playButton = d3.select("#viz1-play-button");
+  var moving = false;
+  var currentValue = 0;
+  var targetValue = width;
+  var timer = 0;
+  var playButton = d3.select("#viz1-play-button");
 
-    var x = d3.scaleLinear() //.scaleTime()
-        .domain([start, end])
-        .range([0, targetValue])
-        .clamp(true);
+  var x = d3.scaleLinear() //.scaleTime()
+      .domain([start, end])
+      .range([0, targetValue])
+      .clamp(true);
 
-    var slider = svg.append("g")
-        .attr("class", "slider")
-        .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
+  var slider = svg.append("g")
+      .attr("class", "slider")
+      .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
 d3.csv("../data_web/season_heat_2003.csv",(data) => {
   //Compute all the paths
   const locations = data.map(line => [line["game_loc_long"],line["game_loc_lat"]])
@@ -44,7 +44,6 @@ d3.csv("../data_web/season_heat_2003.csv",(data) => {
     links.push(topush)
     last_loc = row
   })
-
   //Append the slider on the svg
   slider.append("line")
       .attr("class", "track")
@@ -58,7 +57,7 @@ d3.csv("../data_web/season_heat_2003.csv",(data) => {
           .on("start.interrupt", function() { slider.interrupt(); })
           .on("start drag", function() {
             currentValue = d3.event.x;
-            update(x.invert(currentValue));
+            update(x.invert(currentValue),links);
           })
       );
 
@@ -97,24 +96,25 @@ d3.csv("../data_web/season_heat_2003.csv",(data) => {
         button.text("Play");
       } else {
         moving = true;
-        timer = setInterval(step, 100);
+        timer = setInterval(step, 1000);
         button.text("Pause");
       }
     })
 
   function step() {
-  update(x.invert(currentValue));
-  currentValue = currentValue + (targetValue/NB_MATCH);
-  if (currentValue > targetValue) {
-    moving = false;
-    currentValue = 0;
-    clearInterval(timer);
-    // timer = 0;
-    playButton.text("Play");
+    update(x.invert(currentValue),links);
+    currentValue = currentValue + (targetValue/NB_MATCH);
+    if (currentValue > targetValue) {
+      moving = false;
+      currentValue = 0;
+      clearInterval(timer);
+      // timer = 0;
+      playButton.text("Play");
+    }
   }
-  }
-  function update(h) {
-    drawPaths()
+  function update(h,links) {
+    let n = Math.ceil(h)
+    drawPaths(links[n])
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));
     label

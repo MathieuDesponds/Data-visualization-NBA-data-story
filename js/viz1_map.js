@@ -1,13 +1,13 @@
 import Team from './Team.js';
 
-const width = 960,
+const width = 900,
     height = 480;
 const svg = d3.select("#viz1-map").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 const  projection = d3.geo.albers().scale(800)
-const path = d3.geo.path()
+const path = d3.geoPath()
   .projection(projection);
 
 
@@ -56,16 +56,11 @@ export async function drawCities(){
   })
 }
 
-export async function drawPaths(){
+export async function drawPaths(new_path){
     return new Promise((resolve, reject) => {
-    var link =   [
-                  {type: "LineString", coordinates: [[-84.39619973311765, 33.75725092895011], [-71.06264504509178, 42.36610686544133]]},
-                  {type: "LineString", coordinates: [[-71.06264504509178, 42.36610686544133], [-90.08072646871527, 29.950485009327856]]},
-                  {type: "LineString", coordinates: [[-90.08072646871527, 29.950485009327856], [-87.6728455633052, 41.881968536545465]]}
-                ]
     // Add the path
     var my_path = svg.append("path")
-          .attr("d", path(link[0]))
+          .attr("d", path(new_path))
           .style("fill", "none")
           .style("stroke", "red")
           .style("stroke-width", 3)
@@ -79,10 +74,14 @@ export async function drawPaths(){
             .attr("stroke-dashoffset", length)
               .transition()
               .ease(d3.easeLinear)
-              .style("stroke", "orange")
               .attr("stroke-dashoffset", 0)
               .duration(500)
-              .on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second
+              .transition()
+              .ease(d3.easeLinear)
+              .style("stroke", "orange")
+              .style("stroke-width", 1)
+              .duration(1500)
+              //.on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second
 
       };
 
