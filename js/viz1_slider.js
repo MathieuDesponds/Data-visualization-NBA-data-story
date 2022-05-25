@@ -34,23 +34,51 @@ var x = d3.scaleLinear() //.scaleTime()
 var slider = svg.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
+
+
 d3.csv("../data_web/seasons.csv",(data) => {
-  console.log(selector.getChosenTeams())
-  data.filter(function(d){
-      if(d["team"] == selector.getChosenTeams().values().next().id && d["year"] == selector.getChosenYear){
-      return d
-    }
-  })
-  //Compute all the paths
-  const locations = data.map(line => [line["game_loc_long"],line["game_loc_lat"]])
-  const start_loc = locations[0]
-  var last_loc = start_loc
-  var links =   []
-  locations.forEach(function(row){
-    var topush = {type: "LineString", coordinates: [last_loc, row]}
-    links.push(topush)
-    last_loc = row
-  })
+  var groupedData = d3.flatRollup(
+    data,
+    x => ({
+      matches : x
+    }),
+    d => `${d["season"]} ${d["team"]}`
+  ).map(([key, values]) => {
+    const [season, team] = key.split(' ');
+    return {season, team, ...values};
+  });
+
+  function getData(){
+    var year = selector.getChosenYear()
+    var teams = selector.getChosenTeams()
+    data = []
+    teams.forEach(team => data.push(getSeason(team.id, year)))
+    return data
+  }
+  function getSeason(teamId, year){
+    var that_season = groupedData.filter(function(d){
+      if(d["season"]===""+year && d["team"]==""+teamId){
+        return d
+      }
+    })[0]//[1].map(line => [line["game_loc_long"],line["game_loc_lat"]])
+    //
+    // console.log(that_season[0])
+    // console.log(that_season.team)
+    // console.log(that_season.matches)
+    //Compute all the paths
+    const locations = that_season.matches.map(line => [line["game_loc_long"],line["game_loc_lat"]])
+    const start_loc = locations[0]
+    var last_loc = start_loc
+    var links =   []
+    locations.forEach(function(row){
+      var topush = {type: "LineString", coordinates: [last_loc, row]}
+      links.push(topush)
+      last_loc = row
+    })
+    return links
+  }
+  //var groupedData = d3.group(data, d => d["year"])
+
   //Append the slider on the svg
   slider.append("line")
       .attr("class", "track")
@@ -64,7 +92,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
           .on("start.interrupt", function() { slider.interrupt(); })
           .on("start drag", function() {
             currentValue = d3.event.x;
-            update(x.invert(currentValue),links);
+            update(x.invert(currentValue),getData());
           })
       );
 
@@ -95,21 +123,21 @@ d3.csv("../data_web/seasons.csv",(data) => {
 
   playButton
       .on("click", function() {
-      console.log(links[0])
-      var button = d3.select(this);
-      if (button.text() == "Pause") {
-        moving = false;
-        clearInterval(timer);
-        // timer = 0;
-        button.text("Play");
-      } else {
-        moving = true;
-        timer = setInterval(step, 1000);
-        button.text("Pause");
-      }
-    })
+        var button = d3.select(this);
+        if (button.text() == "Pause") {
+          moving = false;
+          clearInterval(timer);
+          // timer = 0;
+          button.text("Play");
+        } else {
+          data = getData()
+          moving = true;
+          timer = setInterval(() => step(data), 1000);
+          button.text("Pause");
+        }
+      })
 
-  function step() {
+  function step(links) {
     update(x.invert(currentValue),links);
     currentValue = currentValue + (targetValue/NB_MATCH);
     if (currentValue > targetValue) {
@@ -122,7 +150,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
   }
   function update(h,links) {
     let n = Math.ceil(h)
-    drawPaths(links[n])
+    drawPaths(links[0][n])
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));
     label

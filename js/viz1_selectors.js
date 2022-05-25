@@ -1,7 +1,7 @@
 class Viz1Selector {
   constructor(){
     this.chosenTeams = new Set()
-    this.chosenYear = -1
+    this.chosenYear = 2021
   }
   getChosenTeams(){
     return this.chosenTeams
