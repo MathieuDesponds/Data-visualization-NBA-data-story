@@ -56,13 +56,14 @@ export async function drawCities(){
   })
 }
 
-export async function drawPaths(new_path){
+const color = ["blue", "red", "yellow", "grey", "green"]
+export async function drawPaths(new_path, i){
     return new Promise((resolve, reject) => {
     // Add the path
     var my_path = svg.append("path")
           .attr("d", path(new_path))
           .style("fill", "none")
-          .style("stroke", "red")
+          .style("stroke", color[i%color.length])
           .style("stroke-width", 3)
     // Get the length of the path, which we will use for the intial offset to "hide"
     // the graph
@@ -78,7 +79,7 @@ export async function drawPaths(new_path){
               .duration(500)
               .transition()
               .ease(d3.easeLinear)
-              .style("stroke", "orange")
+              // .style("stroke", "orange")
               .style("stroke-width", 1)
               .duration(1500)
               //.on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second

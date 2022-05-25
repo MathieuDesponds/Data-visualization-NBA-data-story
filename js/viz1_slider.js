@@ -148,9 +148,11 @@ d3.csv("../data_web/seasons.csv",(data) => {
       playButton.text("Play");
     }
   }
-  function update(h,links) {
+  function update(h,data) {
     let n = Math.ceil(h)
-    drawPaths(links[0][n])
+    data.forEach((team_match, i) => {
+      drawPaths(team_match[n], i)
+    });
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));
     label
