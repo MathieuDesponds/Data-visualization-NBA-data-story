@@ -1,9 +1,9 @@
 import Team from './Team.js';
 import {showYearSelection, showPeriodForStatisticsSelection, showTeamsCheckbox} from './viz1_selectors.js'
-import {drawCities, drawPaths} from './viz1_map.js'
+import {drawMap, drawCities, drawPaths} from './viz1_map.js'
 
-drawCities()
-drawPaths()
+drawMap()
+  .then(drawCities())
 showYearSelection()
 
 showPeriodForStatisticsSelection()

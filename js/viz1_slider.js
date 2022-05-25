@@ -1,3 +1,6 @@
+
+import {drawPaths} from './viz1_map.js'
+
 var formatDateIntoYear = d3.timeFormat("%Y");
 var formatDate = d3.timeFormat("%b %Y");
 var parseDate = d3.timeParse("%m/%d/%y");
@@ -99,6 +102,7 @@ var svg = d3.select("#viz1-timeline")
     }
   }
   function update(h) {
+    drawPaths()
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));
     label
