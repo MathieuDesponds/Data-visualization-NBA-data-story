@@ -15,6 +15,7 @@ Sur le côté :
 - charger les statistics des teams avec leur kilomètre et les+- de leur point 
 - y display sous forme de tableau 
 
+
 Regarder pourquoi le début des paths est pas exactement sur le point des villes
 Séparer les nom des villes semblables
 
