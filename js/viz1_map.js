@@ -13,7 +13,7 @@ const path = d3.geoPath()
 
 export async function drawMap(){
   return new Promise((resolve, reject) => {
-    d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data/map/na.json", function(error, na) {
+    d3.json("../data/map/na.json", function(error, na) {
       if (error) return console.error(error);
 
         svg.selectAll(".subunit")
