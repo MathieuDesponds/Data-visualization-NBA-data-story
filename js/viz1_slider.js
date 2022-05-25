@@ -1,10 +1,10 @@
-
 import {drawPaths} from './viz1_map.js'
+// import {getChosenTeams} from './viz1_selectors.js'
 
-var formatDateIntoYear = d3.timeFormat("%Y");
-var formatDate = d3.timeFormat("%b %Y");
-var parseDate = d3.timeParse("%m/%d/%y");
-
+// var formatDateIntoYear = d3.timeFormat("%Y");
+// var formatDate = d3.timeFormat("%b %Y");
+// var parseDate = d3.timeParse("%m/%d/%y");
+//
 // const startDate = new Date("2003-10-07"),
 //     endDate = new Date("2004-05-18"),
 //     NB_DAYS = Math.ceil((endDate-startDate) / (1000 * 60 * 60 * 24)); ;
@@ -19,21 +19,28 @@ var svg = d3.select("#viz1-timeline")
     .attr("height", height + margin.top + margin.bottom);
     ////////// slider //////////
 
-  var moving = false;
-  var currentValue = 0;
-  var targetValue = width;
-  var timer = 0;
-  var playButton = d3.select("#viz1-play-button");
+var moving = false;
+var currentValue = 0;
+var targetValue = width;
+var timer = 0;
+var playButton = d3.select("#viz1-play-button");
 
-  var x = d3.scaleLinear() //.scaleTime()
-      .domain([start, end])
-      .range([0, targetValue])
-      .clamp(true);
+var x = d3.scaleLinear() //.scaleTime()
+    .domain([start, end])
+    .range([0, targetValue])
+    .clamp(true);
 
-  var slider = svg.append("g")
-      .attr("class", "slider")
-      .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
-d3.csv("../data_web/season_heat_2003.csv",(data) => {
+var slider = svg.append("g")
+    .attr("class", "slider")
+    .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
+
+d3.csv("../data_web/seasons.csv",(data) => {
+  var dataf = data.filter(function(d){
+    if(d["team"] == 1610612748 && d["year"] == 2003){
+      return d
+    }
+  })
+  console.log(dataf)
   //Compute all the paths
   const locations = data.map(line => [line["game_loc_long"],line["game_loc_lat"]])
   const start_loc = locations[0]
@@ -83,7 +90,7 @@ d3.csv("../data_web/season_heat_2003.csv",(data) => {
   var label = slider.append("text")
       .attr("class", "label")
       .attr("text-anchor", "middle")
-      .text("1")
+      .text(1)
       .attr("transform", "translate(0," + (-25) + ")")
 
   playButton
@@ -119,11 +126,8 @@ d3.csv("../data_web/season_heat_2003.csv",(data) => {
     handle.attr("cx", x(h));
     label
       .attr("x", x(h))
-      .text(formatDate(h));
+      .text(h);
 
   // filter data set and redraw plot
-
   }
-
-
 })
