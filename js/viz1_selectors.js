@@ -106,7 +106,7 @@ class Viz1Selector {
   }
 
   getChosenTeams(){
-    return chosenTeams
+    return this.chosenTeams
   }
 }
 

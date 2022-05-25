@@ -34,10 +34,10 @@ var x = d3.scaleLinear() //.scaleTime()
 var slider = svg.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
-var allTeams = {}
 d3.csv("../data_web/seasons.csv",(data) => {
-  var data = data.filter(function(d){
-    if(d["team"] == 1610612748 && d["year"] == 2003){
+  console.log(selector.getChosenTeams())
+  data.filter(function(d){
+      if(d["team"] == selector.getChosenTeams().values().next().id && d["year"] == selector.getChosenYear){
       return d
     }
   })
@@ -95,7 +95,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
 
   playButton
       .on("click", function() {
-      console.log(selector.getChosenTeams())
+      console.log(links[0])
       var button = d3.select(this);
       if (button.text() == "Pause") {
         moving = false;
