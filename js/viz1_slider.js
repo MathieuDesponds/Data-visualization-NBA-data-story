@@ -1,4 +1,5 @@
 import {drawPaths} from './viz1_map.js'
+import {selector} from './viz1_selectors.js'
 // import {getChosenTeams} from './viz1_selectors.js'
 
 // var formatDateIntoYear = d3.timeFormat("%Y");
@@ -33,14 +34,13 @@ var x = d3.scaleLinear() //.scaleTime()
 var slider = svg.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
-
+var allTeams = {}
 d3.csv("../data_web/seasons.csv",(data) => {
-  var dataf = data.filter(function(d){
+  var data = data.filter(function(d){
     if(d["team"] == 1610612748 && d["year"] == 2003){
       return d
     }
   })
-  console.log(dataf)
   //Compute all the paths
   const locations = data.map(line => [line["game_loc_long"],line["game_loc_lat"]])
   const start_loc = locations[0]
@@ -95,6 +95,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
 
   playButton
       .on("click", function() {
+      console.log(selector.getChosenTeams())
       var button = d3.select(this);
       if (button.text() == "Pause") {
         moving = false;

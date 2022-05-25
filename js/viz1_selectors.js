@@ -1,15 +1,22 @@
-export default class Viz1Selector {
+class Viz1Selector {
   constructor(){
     this.chosenTeams = new Set()
     this.chosenYear = -1
   }
-  
+  getChosenTeams(){
+    return this.chosenTeams
+  }
+
+  getChosenYear(){
+    return this.chosenYear
+  }
   showYearSelection(){
     let years = [...Array(19).keys()].map(i => 2021-i)
     var dropdownButton = d3.select("#viz1-year-selector")
       .append('select')
     // add the options to the button
     dropdownButton // Add a button
+      .attr("id", "ddButon") // corresponding value returned by the butto
       .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
      	.data(years)
       .style("float", "right")
@@ -18,13 +25,15 @@ export default class Viz1Selector {
       .text(function (d) { return d; }) // text showed in the menu
       .attr("value", function (d) { return d; }) // corresponding value returned by the butto
 
-    dropdownButton.on("change", function(d) {
-        updateYear(d3.select(this).property("value"))
+    dropdownButton.on("change", (d) => {
+        this.updateYear(d3.select('#ddButon').property("value"))
     })
-    function updateYear(year){
-      d3.select("#chosen-year")
-        .text(`The year chosen is ${year}`)
-      }
+  }
+
+  updateYear(year){
+    this.chosenYear = year
+    d3.select("#chosen-year")
+      .text(`The year chosen is ${year}`)
   }
 
   showPeriodForStatisticsSelection(){
@@ -51,7 +60,6 @@ export default class Viz1Selector {
   }
 
   showTeamsCheckbox(data){
-    var chosenTeams = new Set()
     var teamSelector = d3.select("#viz1-team-selector");
     var teamButton =
         teamSelector
@@ -62,9 +70,9 @@ export default class Viz1Selector {
             .attr("class", "checkbox");
     teamButton.append("input")
         .attr("type", "checkbox")
-        .attr("id", function(d) { return d.id; })
+        .attr("id", function(d) { return "checkboxes"+d.id; })
         .attr("value", function(d) { return d.name; })
-        .attr("class", "checkboxes");
+        .attr("class", "checkboxes")
     teamButton.append("label")
         .attr('for', function(d) { return d.abbr; })
         .text(function(d) { return d.name; })
@@ -75,30 +83,31 @@ export default class Viz1Selector {
     //     .attr('height', 200)
     //     .attr('width', 200)
 
-    d3.selectAll(".checkboxes").on("click", function(d) {
-        updateChosenTeams(d, d3.select(this).property("checked"))
+    d3.selectAll(".checkboxes").on("click", (d) => {
+        this.updateChosenTeams(d, d3.select("#checkboxes"+d.id).property("checked"))
     })
-
-    function updateChosenTeams(d, add){
-      if(add){
-        chosenTeams.add(d.name)
-      }else{
-        chosenTeams.delete(d.name)
-      }
-      let text = ""
-      if(chosenTeams.size == 0){
-        text = "Chose teams to display !"
-      }else{
-        text = "The teams chosen are ";
-        chosenTeams.forEach (value => text += value+ ", ")
-        text = text.slice(0,-2)
-      }
-      d3.select("#chosen-teams")
-        .text(`${text}`)
+  }
+  updateChosenTeams(d, add){
+    if(add){
+      this.chosenTeams.add(d)
+    }else{
+      this.chosenTeams.delete(d)
     }
+    let text = ""
+    if(this.chosenTeams.size == 0){
+      text = "Chose teams to display !"
+    }else{
+      text = "The teams chosen are ";
+      this.chosenTeams.forEach(value => text += value.name+ ", ")
+      text = text.slice(0,-2)
+    }
+    d3.select("#chosen-teams")
+      .text(`${text}`)
   }
 
   getChosenTeams(){
     return chosenTeams
   }
 }
+
+export var selector = new Viz1Selector()
