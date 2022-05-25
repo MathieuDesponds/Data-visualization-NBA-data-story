@@ -25,49 +25,60 @@ d3.json("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pr
        .attr("d", path)
        .attr("class", "subunit-boundary");
 
-      //Add label to places
-      const circleSize = 6
-      d3.csv(Team.TEAM_FILE,(data) => {
-        var teams = data.map(team => new Team(team));
-        svg.selectAll("circle")
-    		  .data(teams)
-        .enter()
-      		.append("circle")
-          .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
-      		.attr("r", circleSize+"px")
-      		.attr("fill", "red")
+});
+//Add label to places
+const circleSize = 2
+d3.csv(Team.TEAM_FILE,(data) => {
+  var teams = data.map(team => new Team(team));
+  svg.selectAll("circle")
+	  .data(teams)
+  .enter()
+		.append("circle")
+    .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
+		.attr("r", circleSize+"px")
+		.attr("fill", "black")
 
-        svg.selectAll(".place-label")
-          .data(teams)
-        .enter().append("text")
-          .attr("class", "place-label")
-          .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
-          .attr("dy", ".35em")
-          .text(function(d) { return d.name; });
-        })
+  svg.selectAll(".place-label")
+    .data(teams)
+  .enter().append("text")
+    .attr("class", "place-label")
+    .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
+    .attr("dy", ".35em")
+    .text(function(d) { return d.name; });
+  })
 
         ////////// PATHS /////////////
 
-      d3.csv("../data_web/season_heat_2003.csv",(data) => {
-        const locations = data.map(line => [line["game_loc_long"],line["game_loc_lat"]])
-        const start_loc = locations[0]
-        var last_loc = start_loc
-        var link =   []
-        locations.forEach(function(row){
-          var topush = {type: "LineString", coordinates: [last_loc, row]}
-          link.push(topush)
-          last_loc = row
-        })
-        // Add the path
-      svg.selectAll("myPath")
-        .data(link)
-        .enter()
-        .append("path")
-          .attr("d", function(d){ return path(d)})
-          .style("fill", "none")
-          .style("stroke", "orange")
-          .style("stroke-width", 4)
-      })
+// d3.csv("../data_web/season_heat_2003.csv",(data) => {
+//   const locations = data.map(line => [line["game_loc_long"],line["game_loc_lat"]])
+//   const start_loc = locations[0]
+//   var last_loc = start_loc
+//   var link =   []
+//   locations.forEach(function(row){
+//     var topush = {type: "LineString", coordinates: [last_loc, row]}
+//     link.push(topush)
+//     last_loc = row
+//   })
+//   // Add the path
+// svg.selectAll("myPath")
+//   .data(link)
+//   .enter()
+//   .append("path")
+//     .attr("d", function(d){ return path(d)})
+//     .style("fill", "none")
+//     .style("stroke", "orange")
+//     .style("stroke-width", 4)
+// })
 
-
-});
+export function showPath(path){
+  svg.selectAll("myPath")
+    .data(path)
+    .enter()
+    .append("path")
+      .attr("d", function(d){ return path(d)})
+      .style("fill", "none")
+      .style("stroke", "orange")
+      .style("stroke-width", 4)
+    .exit()
+    .remove()
+}

@@ -1,10 +1,18 @@
+Dans vizmap
+- créer le link avec tous les déplacements 
+- faire une fonction qui prend en argument le # deplacement à display et le display
+- Automatiser ça avec une boucle ou un truc pour que toute les secondes y'ait un nouveau déplacement
 
-Faire un path sur la carte entre deux villes pour la saison de Miami
-Animer le path
+Quand on appuie sur le bouton play :
+- on charge la saison de/des teams et on display ça sur la map
+- Faire que le curseur avance en même temps et s'il est bougé revient en arrière
 
+Sur le côté :
+- charger les statistics des teams avec leur kilomètre et les+- de leur point 
+- y display sous forme de tableau 
+
+Regarder pourquoi le début des paths est pas exactement sur le point des villes
 Séparer les nom des villes semblables
-
-On click qui marche pas bien pour les checkboxes
 
 
 Prendre le mexique aussi
