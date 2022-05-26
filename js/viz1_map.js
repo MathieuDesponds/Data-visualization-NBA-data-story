@@ -42,7 +42,7 @@ export async function drawCities(){
     .enter()
       .append("circle")
       .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
-      .attr("r", "8px")
+      .attr("r", "5px")
       .attr("fill", "red")
 
     svg.selectAll(".place-label")
@@ -51,7 +51,9 @@ export async function drawCities(){
       .attr("class", "place-label")
       .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
       .attr("dy", ".35em")
-      .text(function(d) { return d.name; });
+      .text(function(d) { return d.name; })
+      .attr("x", function(d) { return Team.TEAM_ABR_ON_LEFT.has(d.abbr) ? -6 : 6; })
+    .style("text-anchor", function(d) { return Team.TEAM_ABR_ON_LEFT.has(d.abbr) ? "end" : "start"; });
     })
     resolve()
   })
