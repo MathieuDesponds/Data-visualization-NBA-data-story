@@ -114,6 +114,7 @@
 }
 .subunit.USB { fill: #dcd; }
 .subunit.CAN { fill: #ddc; }
+.subunit.MEX { fill: #cdd; }
 
 .subunit-boundary {
   fill: none;
