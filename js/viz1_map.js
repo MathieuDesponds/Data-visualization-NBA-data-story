@@ -1,4 +1,5 @@
 import Team from './Team.js';
+var d3=d3v3;
 
 const width = 900,
     height = 480;
@@ -7,7 +8,7 @@ const svg = d3.select("#viz1-map").append("svg")
     .attr("height", height);
 
 const  projection = d3.geo.albers().scale(800)
-const path = d3.geoPath()
+const path = d3.geo.path()
   .projection(projection);
 
 
@@ -74,11 +75,11 @@ export async function drawPaths(new_path, i){
             .attr("stroke-dasharray", length + " " + length)
             .attr("stroke-dashoffset", length)
               .transition()
-              .ease(d3.easeLinear)
+              .ease("linear")
               .attr("stroke-dashoffset", 0)
               .duration(500)
               .transition()
-              .ease(d3.easeLinear)
+              .ease("linear")
               // .style("stroke", "orange")
               .style("stroke-width", 1)
               .duration(1500)

@@ -85,7 +85,7 @@ function dragStart(e) {
 }
 
 /* drop targets */
-const boxes = document.querySelectorAll('.testbox');
+const boxes = document.querySelectorAll('.field-player');
 
 boxes.forEach(box => {
     box.addEventListener('dragenter', dragEnter)
@@ -123,14 +123,15 @@ function drop(e) {
     e.target.appendChild(draggable);
     console.log(e.target.children);
 }
-/*
-// dummy hist for winning team
+
+/// TEAM A STATS
+
 var margin = {top: 20, right: 30, bottom: 40, left: 90},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg = d3.select("#team-stats")
+var svgA = d3.select("#teamA-stats")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -141,12 +142,12 @@ var svg = d3.select("#team-stats")
 // Parse the Data
 d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv", function(data) {
 
-
   // Add X axis
   var x = d3.scaleLinear()
-    .domain([0, 13000])
+    .domain([13000, 0])
     .range([ 0, width]);
-  svg.append("g")
+
+  svgA.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x))
     .selectAll("text")
@@ -158,11 +159,62 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     .range([ 0, height ])
     .domain(data.map(function(d) { return d.Country; }))
     .padding(.1);
-  svg.append("g")
-    .call(d3.axisLeft(y))
+
+  //only use team B's axis
+  svgA.append("g")
+    .call(d3.axisRight(y).tickFormat(""))
+    .attr("transform", "translate(" + width + ",0)");
 
   //Bars
-  svg.selectAll("myRect")
+  svgA.selectAll("myRect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", function(d) { return x(d.Value); })
+    .attr("y", function(d) { return y(d.Country); })
+    .attr("width", function(d) { return x(13000 - d.Value); })
+    .attr("height", y.bandwidth() )
+    .attr("fill", "#69b3a2")
+});
+
+/// TEAM B STATS
+
+// append the svg object to the body of the page
+var svgB = d3.select("#teamB-stats")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Parse the Data
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv", function(data) {
+
+  // Add X axis
+  var x = d3.scaleLinear()
+    .domain([0, 13000])
+    .range([ 0, width]);
+  svgB.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+      .attr("transform", "translate(-10,0)rotate(-45)")
+      .style("text-anchor", "end");
+
+  // Y axis
+  var y = d3.scaleBand()
+    .range([ 0, height ])
+    .domain(data.map(function(d) { return d.Country; }))
+    .padding(.1);
+  svgB.append("g")
+    .call(d3.axisLeft(y))
+    .selectAll("text")
+      .attr("transform", "translate(-50,0)")
+      .style("text-anchor", "middle");
+
+  //Bars
+  svgB.selectAll("myRect")
     .data(data)
     .enter()
     .append("rect")
@@ -171,6 +223,5 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
     .attr("width", function(d) { return x(d.Value); })
     .attr("height", y.bandwidth() )
     .attr("fill", "#69b3a2")
-});
 
-*/
+});
