@@ -9,7 +9,7 @@ import {selector} from './viz1_selectors.js'
 // const startDate = new Date("2003-10-07"),
 //     endDate = new Date("2004-05-18"),
 //     NB_DAYS = Math.ceil((endDate-startDate) / (1000 * 60 * 60 * 24)); ;
-const start =1, NB_MATCH = 96, end = NB_MATCH
+const start =1, NB_MATCH = 82, end = NB_MATCH
 var margin = {top:50, right:50, bottom:0, left:50},
     width = 550 - margin.left - margin.right,
     height = 100 - margin.top - margin.bottom;

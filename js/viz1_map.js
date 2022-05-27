@@ -7,7 +7,7 @@ const svg = d3.select("#viz1-map").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-const  projection = d3.geo.mercator().center([-100,43]).scale(800).translate([width/2.2, height/3.5])
+const projection = d3.geo.mercator().center([-100,43]).scale(800).translate([width/2.2, height/3.5])
 const path = d3.geo.path()
   .projection(projection);
 
@@ -42,6 +42,7 @@ export async function drawCities(){
     .enter()
       .append("circle")
       .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
+      .attr("dy", ".35em")
       .attr("r", "5px")
       .attr("fill", "red")
 
