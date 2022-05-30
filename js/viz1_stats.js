@@ -42,7 +42,6 @@ d3.csv(Team.TEAM_FILE,
   (data) => data.forEach(team => 
     { var t = new Team(team);
       team_id_to_abbrv.set(t.id, t.abbr)
-      console.log(team_id_to_abbrv.get(t.id))
     })
 )
 
