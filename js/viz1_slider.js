@@ -56,16 +56,22 @@ d3.csv("../data_web/seasons.csv",(data) => {
     teams.forEach(team => data.push(getSeason(team.id, year)))
     return data
   }
+  function getMoreData(){
+    var year = selector.getChosenYear()
+    var teams = selector.getChosenTeams()
+    data = []
+    teams.forEach(team => data.push(getTeamSeasonData(team.id, year)))
+    return data
+  }
+
 
   function getSeason(teamId, year){
-    console.log(teamId+ " "+ year)
     var that_season = groupedData.filter(function(d){
       if(d["season"]==""+year && d["team"]==""+teamId){
         return d
       }
     })[0]//[1].map(line => [line["game_loc_long"],line["game_loc_lat"]])
     //
-    console.log(that_season)
     // console.log(that_season.matches)
     //Compute all the paths
     const locations = that_season.matches.map(line => [line["game_loc_long"],line["game_loc_lat"]])
@@ -80,13 +86,6 @@ d3.csv("../data_web/seasons.csv",(data) => {
     return links
   }
 
-  function getMoreData(){
-    var year = selector.getChosenYear()
-    var teams = selector.getChosenTeams()
-    data = []
-    teams.forEach(team => data.push(getTeamSeasonData(team.id, year)))
-    return data
-  }
 
   function getTeamSeasonData(teamId, year){
     var that_season = groupedData.filter(function(d){
@@ -153,7 +152,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
         } else {
           data = getData()
           moving = true;
-          timer = setInterval(() => step(data, getMoreData()), 1000);
+          timer = setInterval(() => step(getData(), getMoreData()), 1000);
           button.text("Pause");
         }
       })
@@ -170,19 +169,6 @@ d3.csv("../data_web/seasons.csv",(data) => {
     }
   }
 
-  function update(h,data) {
-    let n = Math.ceil(h)
-    data.forEach((team_match, i) => {
-      drawPaths(team_match[n], i)
-    });
-    // update position and text of label according to slider scale
-    handle.attr("cx", x(h));
-    label
-      .attr("x", x(h))
-      .text(h);
-
-  // filter data set and redraw plot
-  }
 
   function update(h,locations, win_pcts) {
     let n = Math.ceil(h)

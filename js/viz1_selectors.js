@@ -87,7 +87,6 @@ class Viz1Selector {
         return d
       }
     })[0]
-    console.log(this.getChosenTeams())
   }
   // updateChosenTeams(d, add){
   //   if(add){
