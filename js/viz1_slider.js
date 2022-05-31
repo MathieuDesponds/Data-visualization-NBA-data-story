@@ -11,14 +11,14 @@ import {updateStats} from './viz1_stats.js'
 //     endDate = new Date("2004-05-18"),
 //     NB_DAYS = Math.ceil((endDate-startDate) / (1000 * 60 * 60 * 24)); ;
 const start =1, NB_MATCH = 82, end = NB_MATCH
-var margin = {top:50, right:50, bottom:0, left:50},
-    width = 550 - margin.left - margin.right,
-    height = 100 - margin.top - margin.bottom;
+var margin = {top:10, right:50, bottom:0, left:65},
+    width = 750 - margin.left - margin.right,
+    height = 65 - margin.top - margin.bottom;
 
 var svg = d3.select("#viz1-timeline")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
+    .attr("width", width +  margin.left + margin.right)
+    .attr("height", height+ margin.top + margin.bottom);
     ////////// slider //////////
 
 var moving = false;
@@ -32,9 +32,10 @@ var x = d3.scaleLinear() //.scaleTime()
     .range([0, targetValue])
     .clamp(true);
 
+const button_size = 60
 var slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
+    .attr("transform", "translate("  +margin.left+" ," + height/2 + ")");
 
 
 d3.csv("../data_web/seasons.csv",(data) => {
@@ -121,11 +122,11 @@ d3.csv("../data_web/seasons.csv",(data) => {
       .attr("class", "ticks")
       .attr("transform", "translate(0," + 18 + ")")
     .selectAll("text")
-      .data(x.ticks(10))
+      .data(x.ticks(16))
       .enter()
       .append("text")
       .attr("x", x)
-      .attr("y", 10)
+      .attr("y", 5)
       .attr("text-anchor", "middle")
       .text(function(d) { return d; });
 
@@ -138,8 +139,8 @@ d3.csv("../data_web/seasons.csv",(data) => {
   var label = slider.append("text")
       .attr("class", "label")
       .attr("text-anchor", "middle")
-      .text(1)
-      .attr("transform", "translate(0," + (-25) + ")")
+      .text("Start of Season")
+      .attr("transform", "translate(0," + (-10) + ")")
 
   playButton
       .on("click", function() {
@@ -179,7 +180,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
     handle.attr("cx", x(h));
     label
       .attr("x", x(h))
-      .text(h);
+      .text("Match #"+n);
 
     // filter data set and redraw plot
     updateStats(win_pcts.map((team_match) => team_match[n]))

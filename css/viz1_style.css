@@ -33,7 +33,7 @@
 }
 
 #viz1-bottom {
-  height : 60px;
+  height : 65px;
   width: 100%;
   border: 1px solid black;
   position: absolute;
@@ -41,8 +41,9 @@
 }
 
 #viz1-timeline{
+  float : right;
   height : 100%;
-  width: 100%;
+  width: 90%;
   border: 1px solid black;
 }
 
@@ -103,7 +104,10 @@
   stroke-dasharray: 2,2;
   stroke-linejoin: round;
 }
-
+#viz1-play-button-zone {
+  width : 65px;
+  float:left;
+}
 #viz1-play-button {
       background: #f08080;
       border-radius: 3px;
@@ -115,3 +119,6 @@
       cursor: pointer;
       height: 30px;
     }
+#viz1-play-button:hover {
+  background-color: #696969;
+}
