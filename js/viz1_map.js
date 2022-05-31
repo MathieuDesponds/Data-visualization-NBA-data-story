@@ -12,8 +12,7 @@ const path = d3.geo.path()
   .projection(projection);
 
 
-export async function drawMap(){
-  return new Promise((resolve, reject) => {
+export function drawMap(){
     d3.json("../data/map/na.json", function(error, na) {
       if (error) return console.error(error);
 
@@ -29,12 +28,10 @@ export async function drawMap(){
          .attr("d", path)
          .attr("class", "subunit-boundary");
     });
-    resolve()
-  })
+    drawCities()
 }
 //Add label to places
-export async function drawCities(){
-  return new Promise((resolve, reject) => {
+export function drawCities(){
     d3.csv(Team.TEAM_FILE,(data) => {
     var teams = data.map(team => new Team(team));
     svg.selectAll("circle")
@@ -56,13 +53,10 @@ export async function drawCities(){
       .attr("x", function(d) { return Team.TEAM_ABR_ON_LEFT.has(d.abbr) ? -6 : 6; })
     .style("text-anchor", function(d) { return Team.TEAM_ABR_ON_LEFT.has(d.abbr) ? "end" : "start"; });
     })
-    resolve()
-  })
 }
 
 const color = ["blue", "red", "yellow", "grey", "green"]
-export async function drawPaths(new_path, i){
-    return new Promise((resolve, reject) => {
+export function drawPaths(new_path, i){
     // Add the path
     var my_path = svg.append("path")
           .attr("d", path(new_path))
@@ -89,10 +83,6 @@ export async function drawPaths(new_path, i){
               //.on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second
 
       };
-
       // Animate the graph for the first time
       repeat();
-
-      resolve()
-    })
 }
