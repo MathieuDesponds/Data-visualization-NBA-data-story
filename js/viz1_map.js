@@ -1,5 +1,6 @@
 import Team from './Team.js';
 
+export const TRAVEL_TIME = 550
 const width = 930,
     height = 480;
 const svg = d3.select("#viz1-map").append("svg")
@@ -59,6 +60,8 @@ export function drawPaths(new_paths, i){
     // Add the path
     var my_path = svg.selectAll(".viz1_paths")
           .data(new_paths)
+
+    const nb_new_comer = my_path.enter().size()
     my_path.enter()
           .append("path")
             .attr("class", "viz1_paths")
@@ -77,10 +80,13 @@ export function drawPaths(new_paths, i){
             .transition()
               .ease(d3.easeLinear)
               .attr("stroke-dashoffset", 0)
-              .duration(500)
+              .duration(TRAVEL_TIME/nb_new_comer)
+              .delay((d, i) => TRAVEL_TIME/nb_new_comer*i)
             .transition()
               .ease(d3.easeLinear)
-              // .style("stroke", "orange")
+              .style("stroke-opacity", 0.7)
               .style("stroke-width", 1)
               .duration(1000)
+              .delay(TRAVEL_TIME)
+    my_path.exit().remove()
 }

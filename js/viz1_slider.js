@@ -1,4 +1,4 @@
-import {drawPaths} from './viz1_map.js'
+import {drawPaths, TRAVEL_TIME} from './viz1_map.js'
 import {selector} from './viz1_selectors.js'
 import {updateStats} from './viz1_stats.js'
 // import {getChosenTeams} from './viz1_selectors.js'
@@ -152,7 +152,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
         } else {
           data = getData()
           moving = true;
-          timer = setInterval(() => step(getData(), getMoreData()), 1000);
+          timer = setInterval(() => step(getData(), getMoreData()), TRAVEL_TIME);
           button.text("Pause");
         }
       })
