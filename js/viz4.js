@@ -7,7 +7,7 @@ var sampleFaces = [ 203099, 1627832,    2544,  203935,  203648,  201186,  202693
        1733, 1627758,  203090,  202344,  201942,    2734, 1627826,
      101126,  203138,    1716,  202323, 1629630,  203200,  202714,
      101179].map(id => `https://cdn.nba.com/headshots/nba/latest/1040x760/${id}.png`)
-
+var players = []
 class Player{
     constructor(name, id, pts){
         this.name = name;
@@ -23,6 +23,11 @@ d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-pro
     console.log("sampleFaces :")
     console.log(sampleFaces)
     displayFaces()
+})
+
+d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/player_selection.csv`, (data) => {
+    players = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"]))
+    console.log(players)
 })
 
 var current_page = 0
@@ -94,6 +99,46 @@ boxes.forEach(box => {
     box.addEventListener('drop', drop);
 });
 
+var teamA = document.querySelector("#team-left").children
+var teamB = document.querySelector("#team-right").children
+teamA = [...teamA]
+teamB = [...teamB]
+console.log(teamA)
+
+function getTeamA(){
+
+  var names = teamA.map(holder=> {
+      if(holder.children.length > 0){
+        return holder.children[0].textContent
+      }
+      else{
+        return ""
+      }
+    }
+  )
+
+  return names.map( name => 
+    players.find( player => player.name == name)
+  )
+}
+
+function getTeamB(){
+
+  var names = teamB.map(holder=> {
+      if(holder.children.length > 0){
+        return holder.children[0].textContent
+      }
+      else{
+        return ""
+      }
+    }
+  )
+
+  return names.map( name => 
+    players.find( player => player.name == name)
+  )
+}
+
 
 function dragEnter(e) {
     e.preventDefault();
@@ -122,9 +167,10 @@ function drop(e) {
     draggable.id = draggable + "_";
     e.target.appendChild(draggable);
     console.log(e.target.children);
+    updateGraph()
 }
 
-/// TEAM A STATS
+/// TEAM STATS
 
 var margin = {top: 20, right: 30, bottom: 40, left: 90},
     width = 460 - margin.left - margin.right,
@@ -139,46 +185,6 @@ var svgA = d3.select("#teamA-stats")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-// Parse the Data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv", function(data) {
-
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([13000, 0])
-    .range([ 0, width]);
-
-  svgA.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x))
-    .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
-
-  // Y axis
-  var y = d3.scaleBand()
-    .range([ 0, height ])
-    .domain(data.map(function(d) { return d.Country; }))
-    .padding(.1);
-
-  //only use team B's axis
-  svgA.append("g")
-    .call(d3.axisRight(y).tickFormat(""))
-    .attr("transform", "translate(" + width + ",0)");
-
-  //Bars
-  svgA.selectAll("myRect")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x", function(d) { return x(d.Value); })
-    .attr("y", function(d) { return y(d.Country); })
-    .attr("width", function(d) { return x(13000 - d.Value); })
-    .attr("height", y.bandwidth() )
-    .attr("fill", "#69b3a2")
-});
-
-/// TEAM B STATS
-
 // append the svg object to the body of the page
 var svgB = d3.select("#teamB-stats")
   .append("svg")
@@ -188,40 +194,98 @@ var svgB = d3.select("#teamB-stats")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-// Parse the Data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv", function(data) {
+function stats(team){
+  var points = 0
+  team.forEach( player => {
+    if(player){
+      console.log(player.pts)
+     points = points + eval(player.pts)
+    }})
+  return [{key:"team points", value:points}]
+}
 
+// Parse the Data
+function updateGraph(){
+
+  var statsA = stats(getTeamA())
+  var statsB = stats(getTeamB())
+
+  console.log(statsA)
+  console.log(statsA[0].value)
+
+  var xrange = 120
+
+  // TEAM A
   // Add X axis
-  var x = d3.scaleLinear()
-    .domain([0, 13000])
+  var xA = d3.scaleLinear()
+    .domain([xrange, 0])
     .range([ 0, width]);
-  svgB.append("g")
+
+  svgA.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x))
+    .call(d3.axisBottom(xA))
     .selectAll("text")
       .attr("transform", "translate(-10,0)rotate(-45)")
       .style("text-anchor", "end");
 
   // Y axis
-  var y = d3.scaleBand()
+  var yA = d3.scaleBand()
     .range([ 0, height ])
-    .domain(data.map(function(d) { return d.Country; }))
+    .domain(statsA.map(function(d) { return d.key; }))
+    .padding(.1);
+
+  //only use team B's axis
+  svgA.append("g")
+    .call(d3.axisRight(yA).tickFormat(""))
+    .attr("transform", "translate(" + width + ",0)");
+
+  //Bars
+  svgA.selectAll("myRect")
+    .data(statsA)
+    .enter()
+    .append("rect")
+    .attr("x", function(d) { return xA(d.value); })
+    .attr("y", function(d) { return yA(d.key); })
+    .attr("width", function(d) { return xA(xrange - d.value); })
+    .attr("height", yA.bandwidth() )
+    .attr("fill", "#69b3a2")
+
+
+  // TEAM B
+  // Add X axis
+  var xB = d3.scaleLinear()
+  .domain([0, xrange])
+  .range([ 0, width]);
+  svgB.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xB))
+    .selectAll("text")
+      .attr("transform", "translate(-10,0)rotate(-45)")
+      .style("text-anchor", "end");
+
+  // Y axis
+  var yB = d3.scaleBand()
+    .range([ 0, height ])
+    .domain(statsA.map(function(d) { return d.key; }))
     .padding(.1);
   svgB.append("g")
-    .call(d3.axisLeft(y))
+    .call(d3.axisLeft(yB))
     .selectAll("text")
       .attr("transform", "translate(-50,0)")
       .style("text-anchor", "middle");
 
   //Bars
   svgB.selectAll("myRect")
-    .data(data)
+    .data(statsB)
     .enter()
     .append("rect")
-    .attr("x", x(0) )
-    .attr("y", function(d) { return y(d.Country); })
-    .attr("width", function(d) { return x(d.Value); })
-    .attr("height", y.bandwidth() )
+    .attr("x", xB(0) )
+    .attr("y", function(d) { return yB(d.key); })
+    .attr("width", function(d) { return xB(d.value); })
+    .attr("height", yB.bandwidth() )
     .attr("fill", "#69b3a2")
 
-});
+};
+
+updateGraph([])
+
