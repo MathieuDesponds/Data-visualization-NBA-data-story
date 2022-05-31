@@ -1,5 +1,6 @@
 import {drawPaths} from './viz1_map.js'
 import {selector} from './viz1_selectors.js'
+import {updateStats} from './viz1_stats.js'
 // import {getChosenTeams} from './viz1_selectors.js'
 
 // var formatDateIntoYear = d3.timeFormat("%Y");
@@ -55,6 +56,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
     teams.forEach(team => data.push(getSeason(team.id, year)))
     return data
   }
+
   function getSeason(teamId, year){
     var that_season = groupedData.filter(function(d){
       if(d["season"]===""+year && d["team"]==""+teamId){
@@ -77,6 +79,25 @@ d3.csv("../data_web/seasons.csv",(data) => {
     })
     return links
   }
+
+  function getMoreData(){
+    var year = selector.getChosenYear()
+    var teams = selector.getChosenTeams()
+    data = []
+    teams.forEach(team => data.push(getTeamSeasonData(team.id, year)))
+    return data
+  }
+
+  function getTeamSeasonData(teamId, year){
+    var that_season = groupedData.filter(function(d){
+      if(d["season"]===""+year && d["team"]==""+teamId){
+        return d
+      }
+    })[0]
+    const win_pcts = that_season.matches.map(line => [line["team"], line["w_pct"]])
+    return win_pcts
+  }
+  
   //var groupedData = d3.group(data, d => d["year"])
 
   //Append the slider on the svg
@@ -92,7 +113,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
           .on("start.interrupt", function() { slider.interrupt(); })
           .on("start drag", function() {
             currentValue = d3.event.x;
-            update(x.invert(currentValue),getData());
+            update(x.invert(currentValue),getData(), getMoreData());
           })
       );
 
@@ -132,13 +153,13 @@ d3.csv("../data_web/seasons.csv",(data) => {
         } else {
           data = getData()
           moving = true;
-          timer = setInterval(() => step(data), 1000);
+          timer = setInterval(() => step(data, getMoreData()), 1000);
           button.text("Pause");
         }
       })
 
-  function step(links) {
-    update(x.invert(currentValue),links);
+  function step(links, win_pcts) {
+    update(x.invert(currentValue),links, win_pcts);
     currentValue = currentValue + (targetValue/NB_MATCH);
     if (currentValue > targetValue) {
       moving = false;
@@ -148,6 +169,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
       playButton.text("Play");
     }
   }
+
   function update(h,data) {
     let n = Math.ceil(h)
     data.forEach((team_match, i) => {
@@ -160,5 +182,20 @@ d3.csv("../data_web/seasons.csv",(data) => {
       .text(h);
 
   // filter data set and redraw plot
+  }
+
+  function update(h,locations, win_pcts) {
+    let n = Math.ceil(h)
+    locations.forEach((team_match, i) => {
+      drawPaths(team_match[n], i)
+    });
+    // update position and text of label according to slider scale
+    handle.attr("cx", x(h));
+    label
+      .attr("x", x(h))
+      .text(h);
+
+    // filter data set and redraw plot
+    updateStats(win_pcts.map((team_match) => team_match[n]))
   }
 })
