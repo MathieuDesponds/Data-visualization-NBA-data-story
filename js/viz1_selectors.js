@@ -73,14 +73,21 @@ class Viz1Selector {
       .enter()
     	.append('option')
       .text(function (d) { return d.city+" "+d.name; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the butto
+      .attr("value", function (d) { return d.id; }) // corresponding value returned by the butto
 
     dropdownButton.on("change", d => {
-        this.updateChosenTeams(d3.select("#team-selector-"+i).property("value"),parseInt(d3.select("#team-selector-"+i).property("id").substring(14)))
+        const teamId = d3.select("#team-selector-"+i).property("value")
+        const nb = parseInt(d3.select("#team-selector-"+i).property("id").substring(14))
+        this.updateChosenTeams(teamId, nb,teams)
     })
   }
-  updateChosenTeams(team, i){
-    this.chosenTeams[i] = team
+  updateChosenTeams(teamId, i,teams){
+    this.chosenTeams[i] = teams.filter(function(d) {
+      if(d.id == ""+teamId){
+        return d
+      }
+    })[0]
+    console.log(this.getChosenTeams())
   }
   // updateChosenTeams(d, add){
   //   if(add){

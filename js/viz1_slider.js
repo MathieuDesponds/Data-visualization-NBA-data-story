@@ -58,14 +58,14 @@ d3.csv("../data_web/seasons.csv",(data) => {
   }
 
   function getSeason(teamId, year){
+    console.log(teamId+ " "+ year)
     var that_season = groupedData.filter(function(d){
-      if(d["season"]===""+year && d["team"]==""+teamId){
+      if(d["season"]==""+year && d["team"]==""+teamId){
         return d
       }
     })[0]//[1].map(line => [line["game_loc_long"],line["game_loc_lat"]])
     //
-    // console.log(that_season[0])
-    // console.log(that_season.team)
+    console.log(that_season)
     // console.log(that_season.matches)
     //Compute all the paths
     const locations = that_season.matches.map(line => [line["game_loc_long"],line["game_loc_lat"]])
@@ -97,7 +97,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
     const win_pcts = that_season.matches.map(line => [line["team"], line["w_pct"]])
     return win_pcts
   }
-  
+
   //var groupedData = d3.group(data, d => d["year"])
 
   //Append the slider on the svg

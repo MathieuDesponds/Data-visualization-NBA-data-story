@@ -71,14 +71,14 @@ export function drawPaths(new_path, i){
             .attr("stroke-dasharray", length + " " + length)
             .attr("stroke-dashoffset", length)
               .transition()
-              .ease("linear")
+              .ease(d3.easeLinear)
               .attr("stroke-dashoffset", 0)
               .duration(500)
               .transition()
-              .ease("linear")
+              .ease(d3.easeLinear)
               // .style("stroke", "orange")
               .style("stroke-width", 1)
-              .duration(1500)
+              .duration(1000)
               //.on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second
 
       };
