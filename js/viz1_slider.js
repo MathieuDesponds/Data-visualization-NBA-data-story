@@ -1,4 +1,4 @@
-import {drawPaths} from './viz1_map.js'
+import {drawPaths, TRAVEL_TIME} from './viz1_map.js'
 import {selector} from './viz1_selectors.js'
 import {updateStats} from './viz1_stats.js'
 // import {getChosenTeams} from './viz1_selectors.js'
@@ -10,15 +10,15 @@ import {updateStats} from './viz1_stats.js'
 // const startDate = new Date("2003-10-07"),
 //     endDate = new Date("2004-05-18"),
 //     NB_DAYS = Math.ceil((endDate-startDate) / (1000 * 60 * 60 * 24)); ;
-const start =1, NB_MATCH = 96, end = NB_MATCH
-var margin = {top:50, right:50, bottom:0, left:50},
-    width = 550 - margin.left - margin.right,
-    height = 100 - margin.top - margin.bottom;
+const start =1, NB_MATCH = 82, end = NB_MATCH
+var margin = {top:10, right:50, bottom:0, left:65},
+    width = 750 - margin.left - margin.right,
+    height = 65 - margin.top - margin.bottom;
 
 var svg = d3.select("#viz1-timeline")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
+    .attr("width", width +  margin.left + margin.right)
+    .attr("height", height+ margin.top + margin.bottom);
     ////////// slider //////////
 
 var moving = false;
@@ -32,9 +32,10 @@ var x = d3.scaleLinear() //.scaleTime()
     .range([0, targetValue])
     .clamp(true);
 
+const button_size = 60
 var slider = svg.append("g")
     .attr("class", "slider")
-    .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
+    .attr("transform", "translate("  +margin.left+" ," + height/2 + ")");
 
 
 d3.csv("../data_web/seasons.csv",(data) => {
@@ -56,16 +57,22 @@ d3.csv("../data_web/seasons.csv",(data) => {
     teams.forEach(team => data.push(getSeason(team.id, year)))
     return data
   }
+  function getMoreData(){
+    var year = selector.getChosenYear()
+    var teams = selector.getChosenTeams()
+    data = []
+    teams.forEach(team => data.push(getTeamSeasonData(team.id, year)))
+    return data
+  }
+
 
   function getSeason(teamId, year){
     var that_season = groupedData.filter(function(d){
-      if(d["season"]===""+year && d["team"]==""+teamId){
+      if(d["season"]==""+year && d["team"]==""+teamId){
         return d
       }
     })[0]//[1].map(line => [line["game_loc_long"],line["game_loc_lat"]])
     //
-    // console.log(that_season[0])
-    // console.log(that_season.team)
     // console.log(that_season.matches)
     //Compute all the paths
     const locations = that_season.matches.map(line => [line["game_loc_long"],line["game_loc_lat"]])
@@ -80,13 +87,6 @@ d3.csv("../data_web/seasons.csv",(data) => {
     return links
   }
 
-  function getMoreData(){
-    var year = selector.getChosenYear()
-    var teams = selector.getChosenTeams()
-    data = []
-    teams.forEach(team => data.push(getTeamSeasonData(team.id, year)))
-    return data
-  }
 
   function getTeamSeasonData(teamId, year){
     var that_season = groupedData.filter(function(d){
@@ -97,7 +97,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
     const win_pcts = that_season.matches.map(line => [line["team"], line["w_pct"]])
     return win_pcts
   }
-  
+
   //var groupedData = d3.group(data, d => d["year"])
 
   //Append the slider on the svg
@@ -122,11 +122,11 @@ d3.csv("../data_web/seasons.csv",(data) => {
       .attr("class", "ticks")
       .attr("transform", "translate(0," + 18 + ")")
     .selectAll("text")
-      .data(x.ticks(10))
+      .data(x.ticks(16))
       .enter()
       .append("text")
       .attr("x", x)
-      .attr("y", 10)
+      .attr("y", 5)
       .attr("text-anchor", "middle")
       .text(function(d) { return d; });
 
@@ -139,8 +139,8 @@ d3.csv("../data_web/seasons.csv",(data) => {
   var label = slider.append("text")
       .attr("class", "label")
       .attr("text-anchor", "middle")
-      .text(1)
-      .attr("transform", "translate(0," + (-25) + ")")
+      .text("Start of Season")
+      .attr("transform", "translate(0," + (-10) + ")")
 
   playButton
       .on("click", function() {
@@ -153,7 +153,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
         } else {
           data = getData()
           moving = true;
-          timer = setInterval(() => step(data, getMoreData()), 1000);
+          timer = setInterval(() => step(getData(), getMoreData()), TRAVEL_TIME);
           button.text("Pause");
         }
       })
@@ -170,30 +170,17 @@ d3.csv("../data_web/seasons.csv",(data) => {
     }
   }
 
-  function update(h,data) {
-    let n = Math.ceil(h)
-    data.forEach((team_match, i) => {
-      drawPaths(team_match[n], i)
-    });
-    // update position and text of label according to slider scale
-    handle.attr("cx", x(h));
-    label
-      .attr("x", x(h))
-      .text(h);
-
-  // filter data set and redraw plot
-  }
 
   function update(h,locations, win_pcts) {
     let n = Math.ceil(h)
     locations.forEach((team_match, i) => {
-      drawPaths(team_match[n], i)
+      drawPaths(team_match.slice(0,n), i)
     });
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));
     label
       .attr("x", x(h))
-      .text(h);
+      .text("Match #"+n);
 
     // filter data set and redraw plot
     updateStats(win_pcts.map((team_match) => team_match[n]))
