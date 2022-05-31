@@ -55,33 +55,32 @@ export function drawCities(){
 }
 
 const color = ["blue", "red", "yellow", "grey", "green"]
-export function drawPaths(new_path, i){
+export function drawPaths(new_paths, i){
     // Add the path
-    var my_path = svg.append("path")
-          .attr("d", path(new_path))
-          .style("fill", "none")
-          .style("stroke", color[i%color.length])
-          .style("stroke-width", 3)
-    // Get the length of the path, which we will use for the intial offset to "hide"
-    // the graph
-    const length = my_path.node().getTotalLength();
-    function repeat() {
-        // Animate the path by setting the initial offset and dasharray and then transition the offset to 0
-          my_path
-            .attr("stroke-dasharray", length + " " + length)
-            .attr("stroke-dashoffset", length)
-              .transition()
+    var my_path = svg.selectAll(".viz1_paths")
+          .data(new_paths)
+    my_path.enter()
+          .append("path")
+            .attr("class", "viz1_paths")
+            .attr("d", d => path(d))
+            .style("fill", "none")
+            .style("stroke", color[i%color.length])
+            .style("stroke-width", 3)
+            .attr("stroke-dasharray", function() {
+                        var totalLength = this.getTotalLength();
+                        return totalLength + " " + totalLength;
+                    })
+            .attr("stroke-dashoffset", function() {
+                        var totalLength = this.getTotalLength();
+                        return ""+totalLength;
+                    })
+            .transition()
               .ease(d3.easeLinear)
               .attr("stroke-dashoffset", 0)
               .duration(500)
-              .transition()
+            .transition()
               .ease(d3.easeLinear)
               // .style("stroke", "orange")
               .style("stroke-width", 1)
               .duration(1000)
-              //.on("end", () => setTimeout(repeat, 1500)) // this will repeat the animation after waiting 1 second
-
-      };
-      // Animate the graph for the first time
-      repeat();
 }

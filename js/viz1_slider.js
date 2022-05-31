@@ -173,7 +173,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
   function update(h,locations, win_pcts) {
     let n = Math.ceil(h)
     locations.forEach((team_match, i) => {
-      drawPaths(team_match[n], i)
+      drawPaths(team_match.slice(0,n), i)
     });
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));
