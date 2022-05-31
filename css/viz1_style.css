@@ -39,24 +39,15 @@
   position: absolute;
   bottom: 0;
 }
-#viz1-year-selector{
-  width: 30%;
-  height : 100px;
-  float : left;
-  border: 1px solid black;
-}
-#viz1-year-selector-text{
-  float: left;
-}
 
 #viz1-timeline{
   height : 100%;
-  width: 70%;
-  float:right; /* add this */
+  width: 100%;
   border: 1px solid black;
 }
+
 .ticks {
-      font-size: 10px;
+      font-size: 12px;
 }
 .track,
 .track-inset,
@@ -98,20 +89,10 @@
 
 }
 
-#viz1-team-selector {
-  width: 100%;
-  height : 35%;
-  border: 1px solid black;
-  overflow-y: auto; /* will contain if #first is longer than #second */
-}
-
-#viz1-period-selector {
-  border: 1px solid black;
-}
-
 #viz1-statistics {
   border: 1px solid black;
 }
+
 .subunit.USB { fill: #dcd; }
 .subunit.CAN { fill: #ddc; }
 .subunit.MEX { fill: #cdd; }
@@ -128,8 +109,8 @@
       border-radius: 3px;
       border: none;
       color: white;
-      margin: 0;
-      padding: 12 0px;
+      margin: 10;
+      padding: 12 10px;
       width: 60px;
       cursor: pointer;
       height: 30px;
