@@ -12,7 +12,7 @@ class Viz1Selector {
   }
   showYearSelection(){
     let years = [...Array(19).keys()].map(i => 2021-i)
-    var dropdownButton = d3.select("#viz1-year-selector")
+    var dropdownButton = d3.select("#viz1-header")
       .append('select')
     // add the options to the button
     dropdownButton // Add a button
@@ -36,19 +36,42 @@ class Viz1Selector {
       .text(`The year chosen is ${year}`)
   }
 
-  showPeriodForStatisticsSelection(){
-    let nb_matches = [1,2,5,10,20,"Whole season"]
-    var dropdownButton = d3.select("#viz1-period-selector")
+  // showPeriodForStatisticsSelection(teams){
+  //   let nb_matches = [1,2,5,10,20,"Whole season"]
+  //   var dropdownButton = d3.select("#viz1-period-selector")
+  //     .append('select')
+  //   // add the options to the button
+  //   dropdownButton // Add a button
+  //     .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
+  //    	.data(nb_matches)
+  //     .style("float", "right")
+  //     .enter()
+  //   	.append('option')
+  //     .text(function (d) { return d; }) // text showed in the menu
+  //     .attr("value", function (d) { return d; }) // corresponding value returned by the butto
+  //
+  //   dropdownButton.on("change", function(d) {
+  //       updatePeriod(d3.select(this).property("value"))
+  //   })
+  //   function updatePeriod(nb_matches){
+  //     // d3.select("#chosen-year")
+  //     //   .text(`The year chosen is ${year}`)
+  //   }
+  // }
+  showSelectorForTeams(teams,i){
+    var dropdownButton = d3.select("#viz1-header")
       .append('select')
     // add the options to the button
     dropdownButton // Add a button
       .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
-     	.data(nb_matches)
+     	.data(teams)
       .style("float", "right")
+      .attr("class", "team-selector")
+      .attr("id", "team-selector-"+i)
       .enter()
     	.append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the butto
+      .text(function (d) { return d.city+" "+d.name; }) // text showed in the menu
+      .attr("value", function (d) { return d.id; }) // corresponding value returned by the butto
 
     dropdownButton.on("change", function(d) {
         updatePeriod(d3.select(this).property("value"))
