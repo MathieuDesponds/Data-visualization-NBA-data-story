@@ -138,10 +138,10 @@ class Viz1Selector {
 
 
   getChosenTeams(){
-    var out = new Set()
+    var out = []
     for (let i = 0; i < Team.MAX_NUMBER_OF_TEAMS; i++) {
       if (this.chosenTeams[i] != null && this.chosenTeams[i].id != 0){
-        out.add(this.chosenTeams[i])
+        out.push(this.chosenTeams[i])
       }
     }
     return out

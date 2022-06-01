@@ -41,7 +41,7 @@ export function drawCities(){
       .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
       .attr("dy", ".35em")
       .attr("r", "5px")
-      .attr("fill", "red")
+      .attr("fill", d=>d.mainColor)
 
     svg.selectAll(".place-label")
       .data(teams)
@@ -55,8 +55,7 @@ export function drawCities(){
     })
 }
 
-const color = ["blue", "red", "yellow", "grey", "green"]
-export function drawPaths(paths, i){
+export function drawPaths(paths,teamColor, i){
     // Add the path
     var my_path = svg.selectAll(".viz1_paths-"+i)
           .data(paths)
@@ -68,7 +67,7 @@ export function drawPaths(paths, i){
             .attr("class", "viz1_paths-"+i)
             .attr("d", d => path(d))
             .style("fill", "none")
-            .style("stroke", color[i%color.length])
+            .style("stroke", d => teamColor)
             .style("stroke-width", 3)
             .attr("stroke-dasharray", function() {
                         var totalLength = this.getTotalLength();
@@ -85,7 +84,7 @@ export function drawPaths(paths, i){
               .delay((d, i) => TRAVEL_TIME/nb_new_comer*(i-(nb_path-nb_new_comer)))
             .transition()
               .ease(d3.easeLinear)
-              .style("stroke-opacity", 0.2)
+              .style("stroke-opacity", 0.5)
               .style("stroke-width", 1)
               .duration(TRAVEL_TIME*2/5)
               .delay(TRAVEL_TIME/5)
