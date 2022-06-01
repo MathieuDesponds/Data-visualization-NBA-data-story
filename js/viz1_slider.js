@@ -139,7 +139,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
   var label = slider.append("text")
       .attr("class", "label")
       .attr("text-anchor", "middle")
-      .text("Start of Season")
+      .text("Season Start")
       .attr("transform", "translate(0," + (-10) + ")")
 
   playButton
