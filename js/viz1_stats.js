@@ -6,12 +6,15 @@ import Team from './Team.js';
 // https://d3-graph-gallery.com/graph/barplot_button_data_hard.html 
 
 var team_id_to_abbrv = new Map();
+var team_id_to_color = new Map();
 d3.csv(Team.TEAM_FILE,
   (data) => data.forEach(team => 
     { var t = new Team(team);
       team_id_to_abbrv.set(t.id, t.abbr)
+      team_id_to_color.set(t.id, t.mainColor)
     })
 )
+
 
 // create svg
 var margin = {top: 10, right: 30, bottom: 20, left: 50},
@@ -98,7 +101,7 @@ export function updateStats(data) {
       .attr("y", function(d) { return ywp(d[1]); })
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - ywp(d[1]); })
-      .attr("fill", "#69b3a2")
+      .attr("fill", function(d) { return team_id_to_color.get(eval(d[0]))})
   
   // If less group in the new dataset, I delete the ones not in use anymore
   uwp
@@ -128,7 +131,7 @@ export function updateStats(data) {
       .attr("y", function(d) { return ykm(0); })
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return ykm(d[2]); })
-      .attr("fill", "#69b3a2")
+      .attr("fill", function(d) { return team_id_to_color.get(eval(d[0]))})
   
   // If less group in the new dataset, I delete the ones not in use anymore
   ukm
