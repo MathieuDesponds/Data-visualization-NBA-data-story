@@ -1,4 +1,5 @@
 import Team from './Team.js';
+import {DUMMY_TEAM} from './Team.js';
 
 class Viz1Selector {
   constructor(){
@@ -139,7 +140,7 @@ class Viz1Selector {
   getChosenTeams(){
     var out = new Set()
     for (let i = 0; i < Team.MAX_NUMBER_OF_TEAMS; i++) {
-      if (this.chosenTeams[i] != null){
+      if (this.chosenTeams[i] != null && this.chosenTeams[i].id != 0){
         out.add(this.chosenTeams[i])
       }
     }
