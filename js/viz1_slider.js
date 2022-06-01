@@ -98,7 +98,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
         return d
       }
     })[0]
-    const win_pcts = that_season.matches.map(line => [line["team"], line["w_pct"]])
+    const win_pcts = that_season.matches.map(line => [line["team"], line["w_pct"], line["cum_dist"]])
     return win_pcts
   }
 
