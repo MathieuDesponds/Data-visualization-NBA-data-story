@@ -77,8 +77,8 @@ export function updateStats(data) {
 
   // STATS WP
   // update x axis if new teams
-  xwp.domain(data.map( (team_match) => team_id_to_abbrv.get(eval(team_match[0]))))
-  xAxisWP.transition().duration(1000).call(d3.axisBottom(xwp))
+  x.domain(data.map( (team_match) => team_id_to_abbrv.get(eval(team_match[0]))))
+  xAxisWP.transition().duration(1000).call(d3.axisBottom(x))
 
   //hide ticks
   xAxisWP.selectAll(".tick").selectAll("line")
@@ -94,9 +94,9 @@ export function updateStats(data) {
     .merge(uwp)
     .transition()
     .duration(1000)
-      .attr("x", function(d) { return xwp(team_id_to_abbrv.get(eval(d[0]))); })
+      .attr("x", function(d) { return x(team_id_to_abbrv.get(eval(d[0]))); })
       .attr("y", function(d) { return ywp(d[1]); })
-      .attr("width", xwp.bandwidth())
+      .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - ywp(d[1]); })
       .attr("fill", "#69b3a2")
   
@@ -124,9 +124,9 @@ export function updateStats(data) {
     .merge(ukm)
     .transition()
     .duration(1000)
-      .attr("x", function(d) { return xkm(team_id_to_abbrv.get(eval(d[0]))); })
+      .attr("x", function(d) { return x(team_id_to_abbrv.get(eval(d[0]))); })
       .attr("y", function(d) { return ykm(0); })
-      .attr("width", xkm.bandwidth())
+      .attr("width", x.bandwidth())
       .attr("height", function(d) { return ykm(d[2]); })
       .attr("fill", "#69b3a2")
   
