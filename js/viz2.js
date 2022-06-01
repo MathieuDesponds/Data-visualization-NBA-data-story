@@ -1,7 +1,7 @@
 
 console.log("coucou")
 
-var margin = {top: 30, right: 10, bottom: 10, left: 0},
+var margin = {top: 50, right: 50, bottom: 50, left: 50},
   width = 1000 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
@@ -14,38 +14,54 @@ var svg = d3.select(".viz2plot")
     .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-y = d3.scalePoint()
+//NOTE the axes are updated dynamically through axisX, axisY
+y = d3.scaleLinear()
     .range([height, 0])
-    .domain([...Array(35).keys()])
+    .domain([31,1])
     
 // Build the X scale -> it find the best position for each Y axis
 x = d3.scalePoint()
     .range([0, width])
     .padding(1)
-    .domain([]);
+    .domain([0, 1]);
 
 var axisX = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x))
-    .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
+
+axisX.selectAll("text")
+    .attr("transform", "translate(0,0)")
+    .style("text-anchor", "end");
 
 var axisY = svg.append("g")
-    //.attr("transform", "translate(0," + height + ")")
     .call(d3.axisLeft().scale(y))
-    .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
-      
-d3.select(".selectButton")
-    .selectAll('myOptions')
-    .data(["22003", "22015"])
-    .enter()
-    .append('option')
-    .text(function (d) { return d; }) // text showed in the menu
-    .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
+axisY.selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+
+// options for the select bar
+d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/rankings.csv",
+    (data) => {
+    allseasons = [...new Set(data
+                             .filter( row => row["season_id"].charAt(0) == "1")
+                             .map(row => row["season_id"]))]
+    d3.select("#selectButton")
+        .selectAll('myOptions')
+        .data(allseasons)
+        .enter()
+        .append('option')
+        .text(function (d) { return d.slice(1); }) // text showed in the menu
+        .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+    d3.select("#selectButton")
+        .on("change", function(d) {
+            console.log("click")
+            var selectedOption = d3.select(this).property("value")
+            updateRanking(selectedOption)
+        })
+});
+      
 function updateRanking(season){
     d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/rankings.csv",
     (data) => {
@@ -61,13 +77,15 @@ function updateRanking(season){
         let dimensions = [...new Set(rankings2003.map( elem => elem["standingsdate"]))]
         console.log(dimensions)
     
-        // Build the X scale -> it find the best position for each Y axis
+        // Build the X scale
         x = d3.scalePoint()
             .range([0, width])
-            .padding(1)
             .domain(dimensions);
     
         axisX.transition().duration(1000).call(d3.axisBottom(x))
+        axisX.selectAll("text")
+            .attr("transform", "translate(0,0)rotate(-45)")
+            .style("text-anchor", "end");
     
         // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this row.
         function path(row) {
@@ -97,23 +115,4 @@ function updateRanking(season){
     })
 }
 
-// Parse the Data
-d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/rankings.csv",
-    (data) => {
-    allseasons = [...new Set(data.map(row => row["season_id"]))]
-    d3.select("#selectButton")
-        .selectAll('myOptions')
-        .data(allseasons)
-        .enter()
-        .append('option')
-        .text(function (d) { return d; }) // text showed in the menu
-        .attr("value", function (d) { return d; }) // corresponding value returned by the button
-
-    d3.select("#selectButton")
-        .on("change", function(d) {
-            console.log("click")
-            var selectedOption = d3.select(this).property("value")
-            updateRanking(selectedOption)
-        })
-});
-
+updateRanking("12003");
