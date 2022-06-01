@@ -215,6 +215,6 @@ d3.csv("../data_web/seasons.csv",(data) => {
       .text("Match #"+n);
 
     // filter data set and redraw plot
-    updateStats(win_pcts.map((team_match) => team_match[n]))
+    updateStats(win_pcts.map((team_match) => team_match[Math.min(team_match.length-1,n)]))
   }
 })

@@ -17,7 +17,7 @@ d3.csv(Team.TEAM_FILE,
 
 
 // create svg
-var margin = {top: 10, right: 30, bottom: 20, left: 50},
+var margin = {top: 30, right: 30, bottom: 10, left: 50},
 width = 300 - margin.left - margin.right,
 height = 300 - margin.top - margin.bottom;
 
@@ -38,6 +38,13 @@ var svpwp = d3.select("#viz1-statistics-wp")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+//title
+svpwp.append("text")
+  .attr("x", (width / 2))             
+  .attr("y", 0)
+  .attr("text-anchor", "middle")  
+  .style("font-size", "16px") 
+  .text("win percentage");
 
 // top chart holds the x axis
 var xAxisWP = svpwp.append("g")
@@ -66,7 +73,14 @@ var svpkm = d3.select("#viz1-statistics-km")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+          "translate(" + margin.left + "," + margin.bottom + ")");
+
+svpkm.append("text")
+          .attr("x", (width / 2))             
+          .attr("y", height + 20)
+          .attr("text-anchor", "middle")  
+          .style("font-size", "16px") 
+          .text("km travelled");
 
 // Add Y axis
 var ykm = d3.scaleLinear()
