@@ -44,9 +44,9 @@ function displayFaces(){
         upperDiv.className = "player_holder";
         upperDiv.id = `player_holder_${i}`;
         upperDiv.style = "display :flex; flex-direction:column;justify-content:center; align-items:center"
-        upperDiv.addEventListener('dragstart', dragStart);
+        
         upperDiv.draggable = true;
-
+        upperDiv.addEventListener('dragstart', dragStart);
         // the inner img
         var img = document.createElement('img');
         player = sampleFaces[i];
@@ -63,6 +63,7 @@ function displayFaces(){
 
 
         target.appendChild(upperDiv)
+        
         console.log(target)
     }
 }
@@ -99,8 +100,26 @@ boxes.forEach(box => {
     box.addEventListener('drop', drop);
 });
 
-var teamA = document.querySelector("#team-left").children
-var teamB = document.querySelector("#team-right").children
+// var teamA = document.querySelector("#team-left").children
+// var teamB = document.querySelector("#team-right").children
+// teamA = [...teamA]
+// teamB = [...teamB]
+// console.log(teamA)
+
+var teamADefense = document.querySelector("#defense-left").children
+var teamAMid = document.querySelector("#mid-left").children
+var teamAFront = document.querySelector("#front-left").children
+console.log("TEAM A CHILDREN") 
+console.log(teamA)
+
+var teamBDefense = document.querySelector("#defense-right").children
+var teamBMid = document.querySelector("#mid-right").children
+var teamBFront = document.querySelector("#front-right").children
+// var teamB = document.querySelector("#team-right").children
+var teamA = teamADefense.concat(teamAMid.concat(teamAFront))
+var teamB = teamBDefense.concat(teamBMid.concat(teamBFront))
+console.log("TEAM A CHILDREN") 
+console.log(teamB)
 teamA = [...teamA]
 teamB = [...teamB]
 console.log(teamA)
@@ -177,7 +196,7 @@ var margin = {top: 20, right: 30, bottom: 40, left: 90},
     height = 400 - margin.top - margin.bottom;
 
 var xrange = 120
-var stats_categories = ["team points"]
+var stats_categories = ["team points", "team efficiency"]
 
 
 // TEAM A
@@ -248,12 +267,16 @@ yB.selectAll("text")
 
 function stats(team){
   var points = 0
+  var effscore = 0
+  var cnt = 0
   team.forEach( player => {
     if(player){
       console.log(player.pts)
      points = points + eval(player.pts)
+     effscore += eval(effscore)
+     cnt += 1
     }})
-  return [{key:"team points", value:points}]
+  return [{key:"team points", value:points}, {key:"efficiency score", value:effscore / cnt}]
 }
 
 
