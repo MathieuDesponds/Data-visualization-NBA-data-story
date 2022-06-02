@@ -98,6 +98,10 @@ function updateRanking(season){
 
         svg.selectAll(".ranking_line").remove()
 
+        function getColorFromTeamId(team_id){
+          var team = teams.filter(d => d.id == team_id)[0]
+          return team.mainColor
+        }
         var highlight = function(d){
           // first every group turns grey
           d3.selectAll(".ranking_line")
@@ -107,7 +111,7 @@ function updateRanking(season){
           // Second the hovered specie takes its color
           d3.selectAll("#ranking_line_" + d['team_id'])
             .transition().duration(200)
-            .style("stroke", "#69b3a2")
+            .style("stroke", d => getColorFromTeamId(d['team_id']))
             .style("opacity", "1")
         }
 
@@ -115,7 +119,7 @@ function updateRanking(season){
         var doNotHighlight = function(d){
           d3.selectAll(".line")
             .transition().duration(200).delay(1000)
-            .style("stroke", function(d){ return( color(d.Species))} )
+            .style("stroke", d => getColorFromTeamId(d['team_id']))
             .style("opacity", "1")
         }
         // Draw the lines
@@ -127,7 +131,7 @@ function updateRanking(season){
                 .attr("id", d => "ranking_line_"+d['team_id'])
                 .attr("d",  path)
                 .style("fill", "none")
-                .style("stroke", "#69b3a2")
+                .style("stroke", d => getColorFromTeamId(d['team_id']))
                 .style("stroke-width", 2)
                 .style("opacity", 0.5)
                 .on("mouseover", highlight)
