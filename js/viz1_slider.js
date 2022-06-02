@@ -143,7 +143,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
   var label = slider.append("text")
       .attr("class", "label")
       .attr("text-anchor", "middle")
-      .text("Start of Season")
+      .text("Season Start")
       .attr("transform", "translate(0," + (-10) + ")")
 
   playButton
@@ -204,8 +204,9 @@ d3.csv("../data_web/seasons.csv",(data) => {
 
   function update(h,locations, win_pcts) {
     let n = Math.ceil(h)
+    let teams = selector.getChosenTeams()
     locations.forEach((team_match, i) => {
-      drawPaths(team_match.slice(0,n), i)
+      drawPaths(team_match.slice(0,Math.min(team_match.length,n)),teams[i].mainColor, i)
     });
     // update position and text of label according to slider scale
     handle.attr("cx", x(h));

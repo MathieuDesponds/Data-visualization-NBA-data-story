@@ -1,6 +1,6 @@
 import Team from './Team.js';
 
-export const TRAVEL_TIME = 550
+export const TRAVEL_TIME = 750
 const width = 930,
     height = 480;
 const svg = d3.select("#viz1-map").append("svg")
@@ -27,8 +27,9 @@ export function drawMap(){
          .datum(topojson.mesh(na, na.objects.subunits, function(a, b) { return a !== b }))
          .attr("d", path)
          .attr("class", "subunit-boundary");
+
+         drawCities()
     });
-    drawCities()
 }
 //Add label to places
 export function drawCities(){
@@ -41,7 +42,7 @@ export function drawCities(){
       .attr("transform", function(d) { return "translate(" + projection(d.coordinates()) + ")"; })
       .attr("dy", ".35em")
       .attr("r", "5px")
-      .attr("fill", "red")
+      .attr("fill", d=>d.mainColor)
 
     svg.selectAll(".place-label")
       .data(teams)
@@ -55,19 +56,19 @@ export function drawCities(){
     })
 }
 
-const color = ["blue", "red", "yellow", "grey", "green"]
-export function drawPaths(new_paths, i){
+export function drawPaths(paths,teamColor, i){
     // Add the path
-    var my_path = svg.selectAll(".viz1_paths")
-          .data(new_paths)
+    var my_path = svg.selectAll(".viz1_paths-"+i)
+          .data(paths)
 
     const nb_new_comer = my_path.enter().size()
+    const nb_path = paths.length
     my_path.enter()
           .append("path")
-            .attr("class", "viz1_paths")
+            .attr("class", "viz1_paths-"+i)
             .attr("d", d => path(d))
             .style("fill", "none")
-            .style("stroke", color[i%color.length])
+            .style("stroke", d => teamColor)
             .style("stroke-width", 3)
             .attr("stroke-dasharray", function() {
                         var totalLength = this.getTotalLength();
@@ -81,12 +82,12 @@ export function drawPaths(new_paths, i){
               .ease(d3.easeLinear)
               .attr("stroke-dashoffset", 0)
               .duration(TRAVEL_TIME/nb_new_comer)
-              .delay((d, i) => TRAVEL_TIME/nb_new_comer*i)
+              .delay((d, i) => TRAVEL_TIME/nb_new_comer*(i-(nb_path-nb_new_comer)))
             .transition()
               .ease(d3.easeLinear)
-              .style("stroke-opacity", 0.7)
+              .style("stroke-opacity", 0.5)
               .style("stroke-width", 1)
-              .duration(1000)
-              .delay(TRAVEL_TIME)
+              .duration(TRAVEL_TIME*2/5)
+              .delay(TRAVEL_TIME/5)
     my_path.exit().remove()
 }

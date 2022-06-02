@@ -176,6 +176,11 @@ var margin = {top: 20, right: 30, bottom: 40, left: 90},
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
+var xrange = 120
+var stats_categories = ["team points"]
+
+
+// TEAM A
 // append the svg object to the body of the page
 var svgA = d3.select("#teamA-stats")
   .append("svg")
@@ -185,6 +190,30 @@ var svgA = d3.select("#teamA-stats")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
+// Add X axis
+var xa = d3.scaleLinear()
+  .domain([xrange, 0])
+  .range([ 0, width]);
+
+var xA = svgA.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(xa));
+xA.selectAll("text")
+    .attr("transform", "translate(-10,0)rotate(-45)")
+    .style("text-anchor", "end");
+
+// Y axis
+var ya = d3.scaleBand()
+    .range([ 0, height ])
+    .domain(stats_categories)
+    .padding(.1);
+
+//only use team B's axis
+var yA = svgA.append("g")
+    .call(d3.axisRight(ya).tickFormat(""))
+  yA.attr("transform", "translate(" + width + ",0)");
+
+  //TEAM B
 // append the svg object to the body of the page
 var svgB = d3.select("#teamB-stats")
   .append("svg")
@@ -193,6 +222,29 @@ var svgB = d3.select("#teamB-stats")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+
+var xb = d3.scaleLinear()
+       .domain([0, xrange])
+       .range([ 0, width]);
+var xB = svgB.append("g")
+             .attr("transform", "translate(0," + height + ")")
+             .call(d3.axisBottom(xb))
+xB.selectAll("text")
+  .attr("transform", "translate(-10,0)rotate(-45)")
+  .style("text-anchor", "end");
+
+// Y axis
+var yb = d3.scaleBand()
+       .range([ 0, height ])
+       .domain(stats_categories)
+       .padding(.1);
+
+var yB = svgB.append("g")
+             .call(d3.axisLeft(yb))
+yB.selectAll("text")
+    .attr("transform", "translate(-50,0)")
+    .style("text-anchor", "middle");
+
 
 function stats(team){
   var points = 0
@@ -204,6 +256,7 @@ function stats(team){
   return [{key:"team points", value:points}]
 }
 
+
 // Parse the Data
 function updateGraph(){
 
@@ -213,79 +266,40 @@ function updateGraph(){
   console.log(statsA)
   console.log(statsA[0].value)
 
-  var xrange = 120
-
-  // TEAM A
-  // Add X axis
-  var xA = d3.scaleLinear()
-    .domain([xrange, 0])
-    .range([ 0, width]);
-
-  svgA.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xA))
-    .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
-
-  // Y axis
-  var yA = d3.scaleBand()
-    .range([ 0, height ])
-    .domain(statsA.map(function(d) { return d.key; }))
-    .padding(.1);
-
-  //only use team B's axis
-  svgA.append("g")
-    .call(d3.axisRight(yA).tickFormat(""))
-    .attr("transform", "translate(" + width + ",0)");
-
   //Bars
-  svgA.selectAll("myRect")
+  uA = svgA.selectAll("myRect")
     .data(statsA)
+
+  uA
     .enter()
     .append("rect")
-    .attr("x", function(d) { return xA(d.value); })
-    .attr("y", function(d) { return yA(d.key); })
-    .attr("width", function(d) { return xA(xrange - d.value); })
-    .attr("height", yA.bandwidth() )
+    .merge(uA)
+    .attr("x", function(d) { return xa(d.value); })
+    .attr("y", function(d) { return ya(d.key); })
+    .attr("width", function(d) { return xa(xrange - d.value); })
+    .attr("height", ya.bandwidth() )
     .attr("fill", "#69b3a2")
 
-
-  // TEAM B
-  // Add X axis
-  var xB = d3.scaleLinear()
-  .domain([0, xrange])
-  .range([ 0, width]);
-  svgB.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xB))
-    .selectAll("text")
-      .attr("transform", "translate(-10,0)rotate(-45)")
-      .style("text-anchor", "end");
-
-  // Y axis
-  var yB = d3.scaleBand()
-    .range([ 0, height ])
-    .domain(statsA.map(function(d) { return d.key; }))
-    .padding(.1);
-  svgB.append("g")
-    .call(d3.axisLeft(yB))
-    .selectAll("text")
-      .attr("transform", "translate(-50,0)")
-      .style("text-anchor", "middle");
+  uA.exit().remove()
 
   //Bars
-  svgB.selectAll("myRect")
+  uB = svgB.selectAll("myRect")
     .data(statsB)
+  uB
     .enter()
     .append("rect")
-    .attr("x", xB(0) )
-    .attr("y", function(d) { return yB(d.key); })
-    .attr("width", function(d) { return xB(d.value); })
-    .attr("height", yB.bandwidth() )
+    .merge(uB)
+    .attr("x", xb(0) )
+    .attr("y", function(d) { return yb(d.key); })
+    .attr("width", function(d) { return xb(d.value); })
+    .attr("height", yb.bandwidth() )
     .attr("fill", "#69b3a2")
+
+  uB
+  .exit()
+  .remove()
 
 };
 
-updateGraph([])
+updateGraph()
 
