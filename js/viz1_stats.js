@@ -6,15 +6,18 @@ import Team from './Team.js';
 // https://d3-graph-gallery.com/graph/barplot_button_data_hard.html 
 
 var team_id_to_abbrv = new Map();
+var team_id_to_color = new Map();
 d3.csv(Team.TEAM_FILE,
   (data) => data.forEach(team => 
     { var t = new Team(team);
       team_id_to_abbrv.set(t.id, t.abbr)
+      team_id_to_color.set(t.id, t.mainColor)
     })
 )
 
+
 // create svg
-var margin = {top: 10, right: 30, bottom: 20, left: 50},
+var margin = {top: 30, right: 30, bottom: 10, left: 50},
 width = 300 - margin.left - margin.right,
 height = 300 - margin.top - margin.bottom;
 
@@ -35,6 +38,13 @@ var svpwp = d3.select("#viz1-statistics-wp")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+//title
+svpwp.append("text")
+  .attr("x", (width / 2))             
+  .attr("y", 0)
+  .attr("text-anchor", "middle")  
+  .style("font-size", "16px") 
+  .text("win percentage");
 
 // top chart holds the x axis
 var xAxisWP = svpwp.append("g")
@@ -63,7 +73,14 @@ var svpkm = d3.select("#viz1-statistics-km")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+          "translate(" + margin.left + "," + margin.bottom + ")");
+
+svpkm.append("text")
+          .attr("x", (width / 2))             
+          .attr("y", height + 20)
+          .attr("text-anchor", "middle")  
+          .style("font-size", "16px") 
+          .text("km travelled");
 
 // Add Y axis
 var ykm = d3.scaleLinear()
@@ -98,7 +115,7 @@ export function updateStats(data) {
       .attr("y", function(d) { return ywp(d[1]); })
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - ywp(d[1]); })
-      .attr("fill", "#69b3a2")
+      .attr("fill", function(d) { return team_id_to_color.get(eval(d[0]))})
   
   // If less group in the new dataset, I delete the ones not in use anymore
   uwp
@@ -128,7 +145,7 @@ export function updateStats(data) {
       .attr("y", function(d) { return ykm(0); })
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return ykm(d[2]); })
-      .attr("fill", "#69b3a2")
+      .attr("fill", function(d) { return team_id_to_color.get(eval(d[0]))})
   
   // If less group in the new dataset, I delete the ones not in use anymore
   ukm
