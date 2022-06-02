@@ -1,5 +1,5 @@
 import Team from './Team.js'
-var margin = {top: 50, right: 50, bottom: 50, left: 50},
+var margin = {top: 50, right: 100, bottom: 50, left: 50},
   width = 1000 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
@@ -27,16 +27,14 @@ var axisX = svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x))
 
-axisX.selectAll("text")
-    .attr("transform", "translate(0,0)")
-    .style("text-anchor", "end");
 
 var axisY = svg.append("g")
     .call(d3.axisLeft().scale(y))
-
+var axisY2= svg.append("g")
 axisY.selectAll("text")
-    .attr("transform", "translate(-10,0)rotate(-45)")
+    .attr("transform", "translate(-10,-5)rotate(-45)")
     .style("text-anchor", "end");
+
 
 // options for the select bar
 d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/rankings.csv",
@@ -73,15 +71,39 @@ function updateRanking(season){
         // Extract the list dates where ranking changes
         let dimensions = [...new Set(rankings2003.map( elem => elem["standingsdate"]))]
 
+        var last_date = dimensions[dimensions.length-1]
+        var last_ranking = data.filter( standing => standing["standingsdate"] == last_date)
+            .map(row => [parseInt(row['next_rank']), row['team_id']])
+            .sort( function( a , b){
+                if(a[0] > b[0]) return 1;
+                if(a[0] < b[0]) return -1;
+                return 0;
+            })
+            .map(row => getNameFromTeamId(row[1]));
         // Build the X scale
         x = d3.scalePoint()
             .range([0, width])
             .domain(dimensions);
 
-        axisX.transition().duration(1000).call(d3.axisBottom(x))
+        axisX.transition().duration(500).call(d3.axisBottom(x))
         axisX.selectAll("text")
-            .attr("transform", "translate(0,0)rotate(-45)")
+            .attr("transform", "translate(0,-5)rotate(-45)")
             .style("text-anchor", "end");
+
+        var y2 = d3.scalePoint()
+            .range([height, 0])
+            .domain(last_ranking)
+
+        axisY2.selectAll("text").remove()
+        axisY2.append("g")
+            .call(d3.axisRight().scale(y2))
+
+        axisY2.selectAll("text")
+            .attr("class", "viz2-team-name-text")
+            .attr("id", d => "viz2-team-name-text-"+d['team_id'])
+            .attr("transform", "translate("+width+",0)")
+            //.style("stroke", function(d) {return getColorFromTeamId(d['team_id'])})
+            .style("text-anchor", "start");
 
         // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this row.
         function path(row) {
@@ -104,11 +126,21 @@ function updateRanking(season){
         }
         var highlight = function(d){
           // first every group turns grey
+
+          d3.selectAll(".viz2-team-name-text")
+          .transition().duration(200)
+          .style("stroke", "lightgrey")
+          .style("opacity", "0.3")
+
           d3.selectAll(".ranking_line")
             .transition().duration(200)
             .style("stroke", "lightgrey")
-            .style("opacity", "0.2")
+            .style("opacity", "0.3")
           // Second the hovered specie takes its color
+          d3.selectAll("viz2-team-name-text-"+d['team_id'])
+            .transition().duration(200)
+            .style("stroke", d => getColorFromTeamId(d['team_id']))
+            .style("opacity", "1")
           d3.selectAll("#ranking_line_" + d['team_id'])
             .transition().duration(200)
             .style("stroke", d => getColorFromTeamId(d['team_id']))
@@ -117,13 +149,13 @@ function updateRanking(season){
 
         // Unhighlight
         var doNotHighlight = function(d){
-          d3.selectAll(".line")
-            .transition().duration(200).delay(1000)
+          d3.selectAll(".ranking_line")
+            .transition().duration(100).delay(100)
             .style("stroke", d => getColorFromTeamId(d['team_id']))
             .style("opacity", "1")
         }
         // Draw the lines
-        svg.selectAll("myPath")
+        svg.selectAll(".ranking_line")
             .data(rankings2003)
             .enter()
                 .append("path")
@@ -135,10 +167,17 @@ function updateRanking(season){
                 .style("stroke-width", 2)
                 .style("opacity", 0.5)
                 .on("mouseover", highlight)
-                .on("mouseleave", doNotHighlight )
+                .on("mouseleave", doNotHighlight );
 
                 // Highlight the specie that is hovered
-
+        function getColorFromTeamId(team_id){
+          var team = teams.filter(d => d.id == team_id)[0]
+          return team.mainColor
+        }
+        function getNameFromTeamId(team_id){
+          var team = teams.filter(d => d.id == team_id)[0]
+          return team.name
+        }
     })})
 }
 
