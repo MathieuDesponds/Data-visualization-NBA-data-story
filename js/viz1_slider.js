@@ -10,6 +10,10 @@ import {updateStats} from './viz1_stats.js'
 // const startDate = new Date("2003-10-07"),
 //     endDate = new Date("2004-05-18"),
 //     NB_DAYS = Math.ceil((endDate-startDate) / (1000 * 60 * 60 * 24)); ;
+
+
+const playIcon = "css/static/icons8-play-button-circled-50.png"
+const pauseIcon = "css/static/icons8-pause-button-50.png"
 const start =1, NB_MATCH = 82, end = NB_MATCH
 var margin = {top:10, right:50, bottom:0, left:65},
     width = 750 - margin.left - margin.right,
@@ -145,18 +149,45 @@ d3.csv("../data_web/seasons.csv",(data) => {
   playButton
       .on("click", function() {
         var button = d3.select(this);
-        if (button.text() == "Pause") {
+        var icon = button.selectAll('img')
+        
+        if (button.attr("buttontype") === "playing") {
+          // WE WERE ON PAUSE => WE START MOVING => WE NOW DIPLAY A PLAY BUTTON
+          icon.attr("src", playIcon)
+          button.attr("buttontype", "paused")
           moving = false;
+          console.log("WE PAUSED")
+          console.log("timer interval clearing :", timer)
+          clearInterval(timer);
           clearInterval(timer);
           // timer = 0;
-          button.text("Play");
         } else {
+          // WE WERE ON PLAY => WE STOP MOVING => WE NOW DIPLAY A PAUSE BUTTON
           data = getData()
           moving = true;
+          console.log("WE PLAY")
+          icon.attr("src", pauseIcon)
+          button.attr("buttontype", "playing")
           timer = setInterval(() => step(getData(), getMoreData()), TRAVEL_TIME);
-          button.text("Pause");
+          console.log("timer interval :", timer)
         }
       })
+      // playButton
+      // .on("click", function() {
+      //   var button = d3.select(this);
+      //   if (button.text() == "Pause") {
+      //     moving = false;
+      //     clearInterval(timer);
+      //     // timer = 0;
+      //     button.text("Play");
+      //   } else {
+      //     data = getData()
+      //     moving = true;
+      //     timer = setInterval(() => step(getData(), getMoreData()), TRAVEL_TIME);
+      //     button.text("Pause");
+      //   }
+      // })
+  
 
   function step(links, win_pcts) {
     update(x.invert(currentValue),links, win_pcts);

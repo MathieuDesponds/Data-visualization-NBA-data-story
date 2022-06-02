@@ -60,6 +60,13 @@ class Viz1Selector {
   //     //   .text(`The year chosen is ${year}`)
   //   }
   // }
+
+  addSelectorForTeam(teams){
+    var dropdownButton = d3.select("#viz1-header")
+      .append('select')
+    
+  }
+
   showSelectorForTeams(teams,i){
     var dropdownButton = d3.select("#viz1-header")
       .append('select')
@@ -80,6 +87,18 @@ class Viz1Selector {
         const nb = parseInt(d3.select("#team-selector-"+i).property("id").substring(14))
         this.updateChosenTeams(teamId, nb,teams)
     })
+
+
+    if(i < Team.MAX_NUMBER_OF_TEAMS){
+      d3.select("#viz1-header")
+          .append("button", "newTeamDisplay")
+          .attr("id", "new-team-button")
+          .text("+")
+          .on("click", () => {
+            d3.select("#new-team-button").remove()
+            this.showSelectorForTeams(teams, i + 1)
+          })
+    }
   }
   updateChosenTeams(teamId, i,teams){
     this.chosenTeams[i] = teams.filter(function(d) {

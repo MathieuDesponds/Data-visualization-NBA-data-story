@@ -22,16 +22,23 @@
     justify-content: center;
     align-items: center;
     height: "100%";
-    width: "100%";
+    width: 100%;    
+}
+
+.court-title {
+    margin: 10px;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #basketball-field{
-    background-image: url("basketball-field-image.jpg");
+    background-image: url("https://static.vecteezy.com/ti/vecteur-libre/p3/183860-terrain-de-basketball-vectoriel.png");
     background-size: contain;
     background-repeat: no-repeat;
     width: 100%;
-    aspect-ratio: 3/2;
-    border:solid;
+    /* aspect-ratio: 3/2; */
     flex-direction: column;
 }
 
@@ -39,23 +46,57 @@
 .drop-targets {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    justify-content: center;
     align-items: center;
-    vertical-align: middle;
-    margin: 20px 0;
+    /* vertical-align: middle; */
+    /* margin: 20px 0; */
+    
+    
 }
 
+.drop-targets-subteam {
+    width:"50%";
+    height: "100%";
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+}
+
+.defense-player-line {
+    height:600px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.mid-player-line {
+    height:400px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.drop-targets {
+    display: flex;
+    flex-direction: row;
+    height:"80%";
+    padding: 100px;
+}
 .field-player {
     height: 150px;
     width: 150px;
     border: solid 10px #ccc;
     margin: 10px;
-
     /* align items in the box */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 
 }
 
