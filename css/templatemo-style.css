@@ -39,6 +39,10 @@ a:focus {
 
 .tm-section-pad-top {
   padding-top: 135px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .tm-text-primary {
