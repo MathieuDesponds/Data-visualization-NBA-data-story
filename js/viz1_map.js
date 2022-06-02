@@ -27,8 +27,9 @@ export function drawMap(){
          .datum(topojson.mesh(na, na.objects.subunits, function(a, b) { return a !== b }))
          .attr("d", path)
          .attr("class", "subunit-boundary");
+
+         drawCities()
     });
-    drawCities()
 }
 //Add label to places
 export function drawCities(){
