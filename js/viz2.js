@@ -80,6 +80,8 @@ function updateRanking(season){
                 return 0;
             })
             .map(row => getNameFromTeamId(row[1]));
+
+
         // Build the X scale
         x = d3.scalePoint()
             .range([0, width])
@@ -91,7 +93,7 @@ function updateRanking(season){
             .style("text-anchor", "end");
 
         var y2 = d3.scalePoint()
-            .range([height, 0])
+            .range([height/31*last_ranking.length, 0])
             .domain(last_ranking)
 
         axisY2.selectAll("text").remove()
@@ -125,24 +127,24 @@ function updateRanking(season){
           return team.mainColor
         }
         var highlight = function(d){
-          // first every group turns grey
-
-          d3.selectAll(".viz2-team-name-text")
-          .transition().duration(200)
-          .style("stroke", "lightgrey")
-          .style("opacity", "0.3")
+          // // first every group turns grey
+          // d3.selectAll(".viz2-team-name-text")
+          // .transition().duration(200)
+          // .style("stroke", "lightgrey")
+          // .style("opacity", "0.3")
 
           d3.selectAll(".ranking_line")
             .transition().duration(200)
             .style("stroke", "lightgrey")
             .style("opacity", "0.3")
           // Second the hovered specie takes its color
-          d3.selectAll("viz2-team-name-text-"+d['team_id'])
-            .transition().duration(200)
-            .style("stroke", d => getColorFromTeamId(d['team_id']))
-            .style("opacity", "1")
+          // d3.selectAll("#viz2-team-name-text-"+d['team_id'])
+          //   .transition().duration(20)
+          //   .style("stroke", "black")
+          //   .style("opacity", "1")
+
           d3.selectAll("#ranking_line_" + d['team_id'])
-            .transition().duration(200)
+            .transition().duration(20)
             .style("stroke", d => getColorFromTeamId(d['team_id']))
             .style("opacity", "1")
         }
@@ -150,9 +152,14 @@ function updateRanking(season){
         // Unhighlight
         var doNotHighlight = function(d){
           d3.selectAll(".ranking_line")
-            .transition().duration(100).delay(100)
+            .transition().duration(500).delay(100)
             .style("stroke", d => getColorFromTeamId(d['team_id']))
             .style("opacity", "1")
+
+          // d3.selectAll(".viz2-team-name-text")
+          //   .transition().duration(500).delay(100)
+          //   .style("stroke", "black")
+          //   .style("opacity", "1")
         }
         // Draw the lines
         svg.selectAll(".ranking_line")
