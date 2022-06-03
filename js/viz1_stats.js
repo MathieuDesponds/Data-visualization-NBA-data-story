@@ -17,7 +17,7 @@ d3.csv(Team.TEAM_FILE,
 
 
 // create svg
-var margin = {top: 30, right: 30, bottom: 10, left: 50},
+var margin = {top: 30, right: 30, bottom: 20, left: 50},
 width = 300 - margin.left - margin.right,
 height = 300 - margin.top - margin.bottom;
 
@@ -40,6 +40,11 @@ var svpwp = d3.select("#viz1-statistics-wp")
           "translate(" + margin.left + "," + margin.top + ")");
 //title
 svpwp.append("text")
+  .attr("x", (width / 2))             
+  .attr("y", -10)
+  .attr("text-anchor", "middle")  
+  .style("font-size", "18px") 
+  .text("win percentage")
   .attr("x", (width / 2))
   .attr("y", 0)
   .attr("text-anchor", "middle")

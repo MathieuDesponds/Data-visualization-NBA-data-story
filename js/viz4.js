@@ -1,12 +1,12 @@
 // TONI's
-var sampleFaces = [ 203099, 1627832,    2544,  203935,  203648,  201186,  202693,
-    1627787,  202091,  201567,    2548,    2550,  201564,  202322,
-     201143,    1717,  202355,  201633,    2853,  202681, 1626161,
-       2748,    1112,  203944,    2427,    2550,  203955,  201568,
-     203121,  201572,    1737, 1628437,    2557, 1628382,  203552,
-       1733, 1627758,  203090,  202344,  201942,    2734, 1627826,
-     101126,  203138,    1716,  202323, 1629630,  203200,  202714,
-     101179].map(id => `https://cdn.nba.com/headshots/nba/latest/1040x760/${id}.png`)
+// var sampleFaces = [ 203099, 1627832,    2544,  203935,  203648,  201186,  202693,
+//     1627787,  202091,  201567,    2548,    2550,  201564,  202322,
+//      201143,    1717,  202355,  201633,    2853,  202681, 1626161,
+//        2748,    1112,  203944,    2427,    2550,  203955,  201568,
+//      203121,  201572,    1737, 1628437,    2557, 1628382,  203552,
+//        1733, 1627758,  203090,  202344,  201942,    2734, 1627826,
+//      101126,  203138,    1716,  202323, 1629630,  203200,  202714,
+//      101179].map(id => `https://cdn.nba.com/headshots/nba/latest/1040x760/${id}.png`)
 var players = []
 class Player{
     constructor(name, id, pts, score){
@@ -16,6 +16,7 @@ class Player{
         this.score = score
     }
 }
+
 
 d3.csv(`../data_web/player_selection.csv`, (data) => {
     sampleFaces = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"], player["score"]))
@@ -36,11 +37,12 @@ function displayFaces(){
     playerFacesRow2.innerHTML = ""
 
     for (var i = current_page * 10; i < (current_page + 1) * 10; i ++){
+        console.log("i = ", i)
+        console.log("current_page = ", current_page)
         var upperDiv = document.createElement("div");
         upperDiv.className = "player_holder";
         upperDiv.id = `player_holder_${i}`;
         // upperDiv.style = "display :flex; flex-direction:column;justify-content:center; align-items:center; paddi"
-
         upperDiv.draggable = true;
         upperDiv.addEventListener('dragstart', dragStart);
         // the inner img
@@ -53,7 +55,6 @@ function displayFaces(){
         target = (i < (current_page * 10 + 5)) ? playerFacesRow1 : playerFacesRow2
         // name after
         var nameHolder = document.createTextNode(player.name)
-
         upperDiv.appendChild(img)
         upperDiv.appendChild(nameHolder)
 
@@ -67,7 +68,6 @@ function whenDocumentLoaded(action) {
 		document.addEventListener("DOMContentLoaded", action);
 	} else {
 		// `DOMContentLoaded` already fired
-
 	}
 }
 
@@ -106,13 +106,14 @@ teamB = [...teamB]
 // var teamAFront = document.querySelector("#front-left").children
 
 
+
+
 // var teamBDefense = document.querySelector("#defense-right").children
 // var teamBMid = document.querySelector("#mid-right").children
 // var teamBFront = document.querySelector("#front-right").children
 // // var teamB = document.querySelector("#team-right").children
 // var teamA = teamADefense.concat(teamAMid.concat(teamAFront))
 // var teamB = teamBDefense.concat(teamBMid.concat(teamBFront))
-
 
 // teamA = [...teamA]
 // teamB = [...teamB]
@@ -130,7 +131,7 @@ function getTeamA(){
     }
   )
 
-  return names.map( name =>
+  return names.map( name => 
     players.find( player => player.name == name)
   )
 }
@@ -256,7 +257,8 @@ var yB = svgB.append("g")
              .call(d3.axisLeft(yb))
 yB.selectAll("text")
     .attr("transform", "translate(-50,0)")
-    .style("text-anchor", "middle");
+    .style("text-anchor", "middle")
+    
 
 
 function stats(team){
@@ -271,7 +273,7 @@ function stats(team){
      cnt += 1
     }})
     //
-  return [{key:"team points", value:points}, {key:"efficiency score", value:(effscore * 100 / cnt)}]
+  return [{key:"team points", value:points}, {key:"efficiency score", value:(effscore * 1000 / cnt)}]
 }
 
 
