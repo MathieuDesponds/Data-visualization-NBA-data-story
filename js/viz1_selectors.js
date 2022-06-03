@@ -1,5 +1,6 @@
 import Team from './Team.js';
 import {DUMMY_TEAM} from './Team.js';
+import {drawPaths} from './viz1_map.js'
 
 class Viz1Selector {
   constructor(){
@@ -96,6 +97,7 @@ class Viz1Selector {
     }
   }
   updateChosenTeams(teamId, i,teams){
+    drawPaths([], "#c8102e",i)
     this.chosenTeams[i] = teams.filter(function(d) {
       if(d.id == ""+teamId){
         return d

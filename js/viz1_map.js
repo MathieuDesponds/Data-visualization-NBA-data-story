@@ -95,6 +95,6 @@ export function drawPaths(paths,teamColor, i){
               // .style("stroke-opacity", 0.5)
               .style("stroke-width", 0)
               .duration(TRAVEL_TIME*5)
-              .delay(TRAVEL_TIME*15)
+              .delay((d, i) => TRAVEL_TIME*+ TRAVEL_TIME*5/nb_new_comer*(i-(nb_path-nb_new_comer)))
     my_path.exit().remove()
 }
