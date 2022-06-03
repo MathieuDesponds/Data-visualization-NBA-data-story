@@ -3,12 +3,12 @@ import Team from './Team.js';
 // using, among others
 // https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
 // https://d3-graph-gallery.com/graph/scatter_buttonXlim.html
-// https://d3-graph-gallery.com/graph/barplot_button_data_hard.html 
+// https://d3-graph-gallery.com/graph/barplot_button_data_hard.html
 
 var team_id_to_abbrv = new Map();
 var team_id_to_color = new Map();
 d3.csv(Team.TEAM_FILE,
-  (data) => data.forEach(team => 
+  (data) => data.forEach(team =>
     { var t = new Team(team);
       team_id_to_abbrv.set(t.id, t.abbr)
       team_id_to_color.set(t.id, t.mainColor)
@@ -40,11 +40,11 @@ var svpwp = d3.select("#viz1-statistics-wp")
           "translate(" + margin.left + "," + margin.top + ")");
 //title
 svpwp.append("text")
-  .attr("x", (width / 2))             
+  .attr("x", (width / 2))
   .attr("y", 0)
-  .attr("text-anchor", "middle")  
-  .style("font-size", "16px") 
-  .text("win percentage");
+  .attr("text-anchor", "middle")
+  .style("font-size", "20px")
+  .text("Win Percentage");
 
 // top chart holds the x axis
 var xAxisWP = svpwp.append("g")
@@ -76,11 +76,11 @@ var svpkm = d3.select("#viz1-statistics-km")
           "translate(" + margin.left + "," + margin.bottom + ")");
 
 svpkm.append("text")
-          .attr("x", (width / 2))             
+          .attr("x", (width / 2))
           .attr("y", height + 20)
-          .attr("text-anchor", "middle")  
-          .style("font-size", "16px") 
-          .text("km travelled");
+          .attr("text-anchor", "middle")
+          .style("font-size", "20px")
+          .text("KM Travelled");
 
 // Add Y axis
 var ykm = d3.scaleLinear()
@@ -101,7 +101,7 @@ export function updateStats(data) {
   xAxisWP.selectAll(".tick").selectAll("line")
     .style("fill", "none")
     .style("stroke", "none")
-  
+
   var uwp = svpwp.selectAll("rect")
     .data(data)
 
@@ -116,7 +116,7 @@ export function updateStats(data) {
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - ywp(d[1]); })
       .attr("fill", function(d) { return team_id_to_color.get(eval(d[0]))})
-  
+
   // If less group in the new dataset, I delete the ones not in use anymore
   uwp
   .exit()
@@ -131,7 +131,7 @@ export function updateStats(data) {
           .range([ height, 0 ]);
 
   yAxisKM.transition().duration(1000).call(d3.axisLeft(ykm));
-  
+
   //update values
   var ukm = svpkm.selectAll("rect")
     .data(data)
@@ -146,7 +146,7 @@ export function updateStats(data) {
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return ykm(d[2]); })
       .attr("fill", function(d) { return team_id_to_color.get(eval(d[0]))})
-  
+
   // If less group in the new dataset, I delete the ones not in use anymore
   ukm
     .exit()
@@ -154,5 +154,3 @@ export function updateStats(data) {
 }
 // Initialize the plot with the first dataset
 updateStats([])
-
-

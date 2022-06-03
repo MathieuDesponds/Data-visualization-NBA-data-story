@@ -77,7 +77,6 @@ d3.csv("../data_web/seasons.csv",(data) => {
       }
     })[0]//[1].map(line => [line["game_loc_long"],line["game_loc_lat"]])
     //
-    // console.log(that_season.matches)
     //Compute all the paths
     const locations = that_season.matches.map(line => [line["game_loc_long"],line["game_loc_lat"]])
     const start_loc = locations[0]
@@ -132,6 +131,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
       .attr("x", x)
       .attr("y", 5)
       .attr("text-anchor", "middle")
+      .style("font-size", "16px")
       .text(function(d) { return d; });
 
   // Le cerlce qui sert à slider
@@ -150,14 +150,12 @@ d3.csv("../data_web/seasons.csv",(data) => {
       .on("click", function() {
         var button = d3.select(this);
         var icon = button.selectAll('img')
-        
+
         if (button.attr("buttontype") === "playing") {
           // WE WERE ON PAUSE => WE START MOVING => WE NOW DIPLAY A PLAY BUTTON
           icon.attr("src", playIcon)
           button.attr("buttontype", "paused")
           moving = false;
-          console.log("WE PAUSED")
-          console.log("timer interval clearing :", timer)
           clearInterval(timer);
           clearInterval(timer);
           // timer = 0;
@@ -165,11 +163,9 @@ d3.csv("../data_web/seasons.csv",(data) => {
           // WE WERE ON PLAY => WE STOP MOVING => WE NOW DIPLAY A PAUSE BUTTON
           data = getData()
           moving = true;
-          console.log("WE PLAY")
           icon.attr("src", pauseIcon)
           button.attr("buttontype", "playing")
           timer = setInterval(() => step(getData(), getMoreData()), TRAVEL_TIME);
-          console.log("timer interval :", timer)
         }
       })
       // playButton
@@ -187,7 +183,7 @@ d3.csv("../data_web/seasons.csv",(data) => {
       //     button.text("Pause");
       //   }
       // })
-  
+
 
   function step(links, win_pcts) {
     update(x.invert(currentValue),links, win_pcts);
