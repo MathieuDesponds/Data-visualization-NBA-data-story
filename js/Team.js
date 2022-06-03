@@ -19,7 +19,7 @@ export default class Team{
       return [this.long, this.lat]
     }
 }
-export const DUMMY_TEAM = new Team({"NICKNAME":"-- Chose a team ! --", "TEAM_ID":"0", "CITY":" ", "ABBREVIATION":"", "LATITUDE":"0.0", "LONGITUDE":"0.0"})
+export const DUMMY_TEAM = new Team({"NICKNAME":"Chose a team", "TEAM_ID":"0", "CITY":" ", "ABBREVIATION":"", "LATITUDE":"0.0", "LONGITUDE":"0.0"})
 
 //Taken from https://raw.githubusercontent.com/homerchen19/nba-color/master/src/colors.js
 //Thanks to him
