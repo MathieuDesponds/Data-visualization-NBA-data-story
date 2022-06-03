@@ -41,16 +41,13 @@
                   <a class="nav-link tm-nav-link" href="#introduction">Introduction</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link tm-nav-link" href="#viz1">Viz 1</a>
+                  <a class="nav-link tm-nav-link" href="#viz1">Travel Map</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link tm-nav-link" href="#viz2">Viz 2</a>
+                  <a class="nav-link tm-nav-link" href="#viz2">Rankings</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link tm-nav-link" href="#viz3">Viz 3</a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link tm-nav-link" href="#viz4">Viz 4</a>
+                <a class="nav-link tm-nav-link" href="#viz4">Fantasy Basket</a>
             </li>
             </ul>
           </div>
@@ -88,8 +85,9 @@
                 <p class="mb-4 tm-intro-text">
                   This is our website where we are going to analyse <strong>the NBA from 2003 to 2020</strong>.
                   Built on a dataset containing all the statistics of every player involved in every game during these seasons.
-                  What conditions make a team successful? What makes player superior? Is there different strategies, trends in strategies?
-                  The target audience will be the NBA fans that love stats. Moreover, the movement on the map will be attractive</p>
+                  We used these precious data to try to provide insights and fun interactive visualizations for basketball lovers
+                  or beginner that want to have fun discovering the teams, and the players.
+                  </p>
                 <div class="tm-next">
                   <a href="https://www.kaggle.com/datasets/nathanlauga/nba-games" class="tm-intro-text tm-btn-primary">Read More</a>
                 </div>
@@ -99,9 +97,9 @@
 
         <div class="row tm-section-pad-top">
             <div style="align-items: center; justify-content: center; width:100%;">
-            <p>
+            <!-- <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tortor dui, suscipit sed augue a, sodales ultricies felis. Vivamus viverra dictum lacus, ut consectetur neque posuere in. Nunc a condimentum lacus, in pellentesque elit. Fusce lobortis ac quam quis congue. Maecenas eget mauris nec felis mollis rutrum ac et ex. Aenean vel elit tincidunt, consectetur mauris vitae, faucibus sem. Suspendisse potenti. Vivamus cursus nibh leo, a aliquam ex viverra vitae. Curabitur velit quam, vulputate ut pellentesque a, porttitor sit amet nibh. Suspendisse at nulla dolor. Vivamus pharetra, justo a viverra vulputate, risus nunc pulvinar sem, finibus mattis orci lacus non enim. Vestibulum eros mauris, lacinia vel justo eget, eleifend egestas eros.
-            </p>
+            </p> -->
         </div>
       </div>
     </section>
@@ -110,8 +108,14 @@
     <!---------------------------------------------- Viz ----------------------------------------->
     <section id="viz1" class="tm-section-pad-top">
       <div class="row">
-        <div class="text-center col-12">
-            <h2 class="tm-text-primary tm-section-title mb-4">Viz 1</h2>
+          <div class="text-center col-12">
+            <h2 class="tm-text-primary tm-section-title mb-4">Surfin' USA</h2>
+            <p class="mx-auto tm-work-description"> Playing regulary throughout all the United States creates a huge amount of transport.
+              With this visualization see the movement of your favorite team during all the season. 
+              You can also compare the movement of multiple team and use the two graphs to see the 
+              evolution of the points between the teams. You can also compare the number of kilometers made
+              by the teams.
+              </p>
         </div>
       </div>
       <div class="container tm-container-gallery">
@@ -147,18 +151,20 @@
             <div class="container tm-container-gallery">
               <div class="row">
                 <div class="text-center col-12">
-                    <h2 class="tm-text-primary tm-section-title mb-4">Viz 2</h2>
+                    <h2 class="tm-text-primary tm-section-title mb-4">Evolution of the rankings</h2>
                     <p class="mx-auto tm-work-description">
-                      "Curabitur ac orci ac lorem blandit volutpat. Sed ac sodales nibh, ut
-                      porttitor elit. Sed id dui mi. Vestibulum ante ipsum primis in faucibus
-                      orci luctus et ultrices posuere cubilia."
+                      You struggle to capture the whole evolution of the ranking during a season?
+                      You want to relieve the fight for the title during your favourite season? Then this visualization is 
+                      made for you! You can select the season and see the evolution of the ranking of every team
+                      throughout the season.
                     </p>
                 </div>
               </div>
-                <select id="selectButton"></select>
+                <div style="display:flex; flex-direction:row; justify-content: space-between; height:50px; padding: 10px; width: 300px;">
+                  <p>Select a season :</p>
+                  <select id="selectButton"></select>
+                </div>
                 <div class="viz2plot">
-                  <p> wazap </p>
-
                 </div>
             </div>
           </section>
@@ -207,12 +213,14 @@
         <div class="container tm-container-gallery">
           <div class="row">
             <div class="text-center col-12">
-                <h2 class="tm-text-primary tm-section-title mb-4">Viz 4</h2>
+                <h2 class="tm-text-primary tm-section-title mb-4">Become the coach!</h2>
                 <p class="mx-auto tm-work-description">
-                  "Curabitur ac orci ac lorem blandit volutpat. Sed ac sodales nibh, ut
-                  porttitor elit. Sed id dui mi. Vestibulum ante ipsum primis in faucibus
-                  orci luctus et ultrices posuere cubilia."
+                  Ever wondered who would win between a team featuring Lebron James and Kobe, and one featuring Steve Nash and Yao Ming?
+                  You have, below, the choice between 100 of the best player of the twenty past years. Create you dream 
+                  team and make it face another team of your choice to see who would win! The plot displays two statistics :
+                  the predicted number of points of each team, and the efficiency score of the players used y the NBA itself.
                 </p>
+                <h5>Create the game of your wildest dreams!</h4>
             </div>
 
             <!-- PLAYER SELECTOR -->
@@ -243,7 +251,7 @@
 
             <!-- COURT -->
             <div class="court-title">
-              <h1>Make your team with players below</h1>
+              <h1>Make your team with players Above</h1>
             </div>
             <div id="basketball-field">
               <div class="drop-targets">
@@ -275,16 +283,20 @@
               <!-- END COURT -->
 
 
+
+
+            </div>
               <!-- TEAM STAT -->
               <div class="row" id="team-stats">
+                <div style="width: 150px;">
+                  <h1>Teams' Stats</h1>
+                </div>
                 <div id="teamA-stats"></div>
                 <div id="team-stats-labels"></div>
                 <div id="teamB-stats"></div>
               </div>
               <!-- END TEAM STAT -->
-
-            </div>
-
+              
 
             
           </div>
