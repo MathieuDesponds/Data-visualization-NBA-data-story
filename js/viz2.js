@@ -49,7 +49,7 @@ d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pro
         .append('option')
         .text(function (d) {
 
-            return d.slice(1) == "2003" ? "" : d.slice(1); 
+            return d.slice(1) == "2003" ? "" : d.slice(1);
         }) // text showed in the menu
         .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
@@ -92,7 +92,7 @@ function updateRanking(season){
 
         axisX.transition().duration(500).call(d3.axisBottom(x))
         axisX.selectAll("text")
-            .attr("transform", "translate(0,-5)rotate(-45)")
+            .attr("transform", "translate(-5,3)rotate(-45)")
             .style("text-anchor", "end");
 
         var y2 = d3.scalePoint()

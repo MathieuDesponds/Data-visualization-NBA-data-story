@@ -135,7 +135,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      /* background-color: white; */
+       background-color: white; 
       border-width: 0;
     }
 #viz1-play-button:hover {

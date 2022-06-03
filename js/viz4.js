@@ -17,18 +17,13 @@ class Player{
     }
 }
 
-d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/player_selection.csv`, (data) => {
-    console.log("data :")
-    console.log(data)
+d3.csv(`../data_web/player_selection.csv`, (data) => {
     sampleFaces = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"], player["score"]))
-    console.log("sampleFaces :")
-    console.log(sampleFaces)
     displayFaces()
 })
 
-d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/player_selection.csv`, (data) => {
+d3.csv(`../data_web/player_selection.csv`, (data) => {
     players = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"], player["score"]))
-    console.log(players)
 })
 
 var current_page = 0
@@ -64,8 +59,6 @@ function displayFaces(){
 
 
         target.appendChild(upperDiv)
-
-        console.log(target)
     }
 }
 
@@ -90,7 +83,6 @@ function pageSelection(pageIndex) {
 function dragStart(e) {
     // e.dataTransfer.setData('text/plain', e.target.id);
     e.dataTransfer.setData('text/plain', e.target.id);
-    console.log("switching this : ")
 }
 
 /* drop targets */
@@ -107,13 +99,12 @@ var teamA = document.querySelector("#team-left").children
 var teamB = document.querySelector("#team-right").children
 teamA = [...teamA]
 teamB = [...teamB]
-// console.log(teamA)
+
 
 // var teamADefense = document.querySelector("#defense-left").children
 // var teamAMid = document.querySelector("#mid-left").children
 // var teamAFront = document.querySelector("#front-left").children
-// console.log("TEAM A CHILDREN")
-// console.log(teamA)
+
 
 // var teamBDefense = document.querySelector("#defense-right").children
 // var teamBMid = document.querySelector("#mid-right").children
@@ -121,11 +112,11 @@ teamB = [...teamB]
 // // var teamB = document.querySelector("#team-right").children
 // var teamA = teamADefense.concat(teamAMid.concat(teamAFront))
 // var teamB = teamBDefense.concat(teamBMid.concat(teamBFront))
-// console.log("TEAM A CHILDREN")
-// console.log(teamB)
+
+
 // teamA = [...teamA]
 // teamB = [...teamB]
-// console.log(teamA)
+
 
 function getTeamA(){
 
@@ -181,8 +172,6 @@ function drop(e) {
 
     // get the draggable element
     const id = e.dataTransfer.getData('text/plain');
-    console.log("data transfer is :")
-    console.log(e.dataTransfer.getData('text/plain').innerHTML)
     const draggable = document.getElementById(id).cloneNode(true);
     draggable.className = "player_holder_selected"
 
@@ -191,7 +180,6 @@ function drop(e) {
     // add it to the drop target
     draggable.id = draggable + "_";
     e.target.appendChild(draggable);
-    console.log(e.target.children);
     updateGraph()
 }
 
@@ -277,10 +265,6 @@ function stats(team){
   var cnt = 0
   team.forEach( player => {
     if(player){
-    console.log("stat : ")
-    console.log(player)
-    console.log(player.pts)
-    console.log(player.score)
     points = points + eval(player.pts)
 
      effscore += eval(player.score)
@@ -297,8 +281,6 @@ function updateGraph(){
   var statsA = stats(getTeamA())
   var statsB = stats(getTeamB())
 
-  console.log(statsA)
-  console.log(statsA[0].value)
 
   //Bars
   uA = svgA.selectAll("myRect")
@@ -310,15 +292,11 @@ function updateGraph(){
     .merge(uA)
     .attr("x", function(d) { return xa(d.value); })
     .attr("y", function(d) {
-      console.log("________________________________")
-      console.log(d)
-      console.log(d.key)
-      console.log("________________________________")
       return ya(d.key);
     })
     .attr("width", function(d) { return xa(xrange - d.value); })
     .attr("height", ya.bandwidth() )
-    .attr("fill", "#69b3a2")
+    .attr("fill", "#1d4289")
 
   uA.exit().remove()
 
@@ -333,7 +311,7 @@ function updateGraph(){
     .attr("y", function(d) { return yb(d.key); })
     .attr("width", function(d) { return xb(d.value); })
     .attr("height", yb.bandwidth() )
-    .attr("fill", "#69b3a2")
+    .attr("fill", "#c80f2e")
 
   uB
   .exit()
