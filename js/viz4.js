@@ -17,7 +17,7 @@ class Player{
     }
 }
 
-
+// try
 d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/player_selection.csv`, (data) => {
     sampleFaces = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"], player["score"]))
     displayFaces()
