@@ -32,7 +32,7 @@ var axisY = svg.append("g")
     .call(d3.axisLeft().scale(y))
 var axisY2= svg.append("g")
 axisY.selectAll("text")
-    .attr("transform", "translate(-10,0)")
+    .attr("transform", "translate(-10,-5)rotate(-45)")
     .style("text-anchor", "end");
 
 
@@ -47,7 +47,10 @@ d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pro
         .data(allseasons)
         .enter()
         .append('option')
-        .text(function (d) { return d.slice(1); }) // text showed in the menu
+        .text(function (d) {
+
+            return d.slice(1) == "2003" ? "" : d.slice(1); 
+        }) // text showed in the menu
         .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
     d3.select("#selectButton")

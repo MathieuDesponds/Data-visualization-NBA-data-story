@@ -29,6 +29,33 @@ a:focus {
   outline: none;
 }
 
+
+#viz1{
+  background-color: white;
+  padding-bottom: 100px;
+}
+
+#viz4{
+  background-color: white;
+  padding-top: 100px;
+}
+#viz2{
+  padding-bottom: 100px;
+  
+}
+
+
+.viz2plot{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#team-stats{
+  width:3000px;
+  margin:100px
+}
+
 .btn {
   padding: 8px 32px;
 }
