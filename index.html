@@ -73,11 +73,11 @@
 
     <div class="content-full-container" style="background-color: #ececec; display:flex; width:100%; flex-direction: column; align-content: center;">
     <!------------------------------------------ INTRODUCTION  ---------------------------------------->
-    <section id="introduction" class="tm-section-pad-top">
+    <section id="introduction" class="tm-section-pad-top" style="padding-bottom: 5%; padding-top: 5%;">
       <div class="container">
         <div class="row">
           <div class="col-lg-6">
-            <img src="https://wallpaperaccess.com/full/2872553.jpg" alt="Image" class="img-fluid tm-intro-img" />
+            <img src="https://wallpaperaccess.com/full/2872553.jpg" alt="Image" class="img-fluid tm-intro-img";/>
           </div>
           <div class="col-lg-6">
             <div class="tm-intro-text-container">
@@ -94,28 +94,23 @@
             </div>
           </div>
         </div>
-
-        <div class="row tm-section-pad-top">
-            <div style="align-items: center; justify-content: center; width:100%;">
-            <!-- <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tortor dui, suscipit sed augue a, sodales ultricies felis. Vivamus viverra dictum lacus, ut consectetur neque posuere in. Nunc a condimentum lacus, in pellentesque elit. Fusce lobortis ac quam quis congue. Maecenas eget mauris nec felis mollis rutrum ac et ex. Aenean vel elit tincidunt, consectetur mauris vitae, faucibus sem. Suspendisse potenti. Vivamus cursus nibh leo, a aliquam ex viverra vitae. Curabitur velit quam, vulputate ut pellentesque a, porttitor sit amet nibh. Suspendisse at nulla dolor. Vivamus pharetra, justo a viverra vulputate, risus nunc pulvinar sem, finibus mattis orci lacus non enim. Vestibulum eros mauris, lacinia vel justo eget, eleifend egestas eros.
-            </p> -->
-        </div>
       </div>
     </section>
 
 
     <!---------------------------------------------- Viz ----------------------------------------->
-    <section id="viz1" class="tm-section-pad-top">
-      <div class="row">
+    <section id="viz1" class="tm-section-pad-top" style="padding-top: 3%; padding-bottom: 3%;">
+      <div class="row", style="width:70%;">
           <div class="text-center col-12">
             <h2 class="tm-text-primary tm-section-title mb-4">Surfin' USA</h2>
-            <p class="mx-auto tm-work-description"> Playing regulary throughout all the United States creates a huge amount of transport.
-              With this visualization see the movement of your favorite team during all the season. 
-              You can also compare the movement of multiple team and use the two graphs to see the 
-              evolution of the points between the teams. You can also compare the number of kilometers made
-              by the teams.
-              </p>
+            <div style="width: 100%; text-align: center;">
+              <p> Playing regulary throughout all the United States creates a huge amount of transport.
+                With this visualization see the movement of your favorite team during all the season.
+                You can also compare the movement of multiple team and use the two graphs to see the 
+                evolution of the points between the teams. You can also compare the number of kilometers made
+                by the teams.
+                </p>
+            </div>
         </div>
       </div>
       <div class="container tm-container-gallery">
@@ -147,12 +142,12 @@
 
 
         <!---------------------------------------------- Viz ----------------------------------------->
-        <section id="viz2" class="tm-section-pad-top">
+        <section id="viz2" class="tm-section-pad-top" style="padding-bottom: 5%; padding-top: 5%;">
             <div class="container tm-container-gallery">
               <div class="row">
                 <div class="text-center col-12">
                     <h2 class="tm-text-primary tm-section-title mb-4">Evolution of the rankings</h2>
-                    <p class="mx-auto tm-work-description">
+                    <p>
                       You struggle to capture the whole evolution of the ranking during a season?
                       You want to relieve the fight for the title during your favourite season? Then this visualization is 
                       made for you! You can select the season and see the evolution of the ranking of every team
@@ -211,12 +206,12 @@
 
           <!---------------------------------------------- Viz ----------------------------------------->
 
-      <section id="viz4" class="tm-section-pad-top">
+      <section id="viz4" class="tm-section-pad-top" style="padding-bottom: 5%; padding-top: 5%;">
         <div class="container tm-container-gallery">
           <div class="row">
             <div class="text-center col-12">
                 <h2 class="tm-text-primary tm-section-title mb-4">Become the coach!</h2>
-                <p class="mx-auto tm-work-description">
+                <p>
                   Ever wondered who would win between a team featuring Lebron James and Kobe, and one featuring Steve Nash and Yao Ming?
                   You have, below, the choice between 100 of the best player of the twenty past years. Create you dream 
                   team and make it face another team of your choice to see who would win! The plot displays two statistics :
@@ -239,11 +234,11 @@
                   <button class="page_selection_button" onclick="pageSelection(3);">3</button>
                   <button class="page_selection_button" onclick="pageSelection(4);">4</button>
                   <button class="page_selection_button" onclick="pageSelection(5);">5</button>
-                  <button class="page_selection_button" onclick="pageSelection(1);">6</button>
-                  <button class="page_selection_button" onclick="pageSelection(2);">7</button>
-                  <button class="page_selection_button" onclick="pageSelection(3);">8</button>
-                  <button class="page_selection_button" onclick="pageSelection(4);">9</button>
-                  <button class="page_selection_button" onclick="pageSelection(5);">10</button>
+                  <button class="page_selection_button" onclick="pageSelection(6);">6</button>
+                  <button class="page_selection_button" onclick="pageSelection(7);">7</button>
+                  <button class="page_selection_button" onclick="pageSelection(8);">8</button>
+                  <button class="page_selection_button" onclick="pageSelection(9);">9</button>
+                  <button class="page_selection_button" onclick="pageSelection(10);">10</button>
                 </div>
               </div>
               <div style="width: 100%; height : 100%; background-color: #d8d8d8 ; border-radius: 10px; margin:10px; display:flex; justify-content:space-evenly; flex-direction: column;" id="player-faces-container">
@@ -255,7 +250,6 @@
             <!-- END PLAYER SELECTOR -->
 
             <!-- COURT -->
-
             <div id="basketball-field">
               <div class="drop-targets">
                 <div class="drop-targets-subteam" id="team-left">
@@ -288,22 +282,44 @@
 
 
 
-            </div>
+            <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; align-content: center;">
+              <h3>Teams' stats: </h3>
               <!-- TEAM STAT -->
               <div class="row" id="team-stats">
-                <div style="width: 150px;">
+                <!-- <div style="width: 150px;">
                   <h1>Teams' Stats</h1>
-                </div>
+                </div> -->
                 <div id="teamA-stats"></div>
                 <div id="team-stats-labels"></div>
                 <div id="teamB-stats"></div>
               </div>
-              <!-- END TEAM STAT -->
-              
-
-            
           </div>
+          <!-- END TEAM STAT -->             
       </section>
+
+      <div class="footer">
+
+        <!-- AUTHORS -->
+        <div style="width:30%">
+          <div class="creator">
+            <h5 style="color: white">Antoine Magron</h5>
+            <p><a href="https://github.com/magantoine">@magantoine</a></p> 
+          </div>
+          <div class="creator">
+            <h5 style="color: white">Mathieu Desponds</h5>
+            <p><a href="https://github.com/Mathiponds">@Matiponds</a></p> 
+          </div> 
+          <div class="creator">
+            <h5 style="color: white">Paul Juillard</h5>
+            <p><a href="https://github.com/PaulJuillard">@PaulJuillard</a></p> 
+          </div>
+        </div> 
+        <!-- END AUTHORS -->
+
+        <div style="width:17%; text-align:center; vertical-align: center; height:50%">
+          <p>Made for data visualization course at EPFL (COM-480), Spring Semester 2022, link to our github <a href="https://github.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins">here</a></p> 
+        </div>
+      </div>
     </div>
       <!------------------------------------------- END OF VIZ ------------------------------------------------->
 
