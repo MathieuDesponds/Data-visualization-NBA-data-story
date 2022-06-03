@@ -9,24 +9,25 @@ var sampleFaces = [ 203099, 1627832,    2544,  203935,  203648,  201186,  202693
      101179].map(id => `https://cdn.nba.com/headshots/nba/latest/1040x760/${id}.png`)
 var players = []
 class Player{
-    constructor(name, id, pts){
+    constructor(name, id, pts, score){
         this.name = name;
         this.id = id; 
         this.pts = pts
+        this.score = score
     }
 }
 
 d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/player_selection.csv`, (data) => {
     console.log("data :")
     console.log(data)
-    sampleFaces = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"]))
+    sampleFaces = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"], player["score"]))
     console.log("sampleFaces :")
     console.log(sampleFaces)
     displayFaces()
 })
 
 d3.csv(`https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/player_selection.csv`, (data) => {
-    players = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"]))
+    players = data.map(player => new Player(player["player_name"], parseInt(player["player_id"]), player["pts"], player["score"]))
     console.log(players)
 })
 
@@ -43,7 +44,7 @@ function displayFaces(){
         var upperDiv = document.createElement("div");
         upperDiv.className = "player_holder";
         upperDiv.id = `player_holder_${i}`;
-        upperDiv.style = "display :flex; flex-direction:column;justify-content:center; align-items:center"
+        // upperDiv.style = "display :flex; flex-direction:column;justify-content:center; align-items:center; paddi"
         
         upperDiv.draggable = true;
         upperDiv.addEventListener('dragstart', dragStart);
@@ -87,7 +88,9 @@ function pageSelection(pageIndex) {
 /* draggable element */
 
 function dragStart(e) {
+    // e.dataTransfer.setData('text/plain', e.target.id);
     e.dataTransfer.setData('text/plain', e.target.id);
+    console.log("switching this : ")
 }
 
 /* drop targets */
@@ -100,29 +103,29 @@ boxes.forEach(box => {
     box.addEventListener('drop', drop);
 });
 
-// var teamA = document.querySelector("#team-left").children
-// var teamB = document.querySelector("#team-right").children
+var teamA = document.querySelector("#team-left").children
+var teamB = document.querySelector("#team-right").children
+teamA = [...teamA]
+teamB = [...teamB]
+// console.log(teamA)
+
+// var teamADefense = document.querySelector("#defense-left").children
+// var teamAMid = document.querySelector("#mid-left").children
+// var teamAFront = document.querySelector("#front-left").children
+// console.log("TEAM A CHILDREN") 
+// console.log(teamA)
+
+// var teamBDefense = document.querySelector("#defense-right").children
+// var teamBMid = document.querySelector("#mid-right").children
+// var teamBFront = document.querySelector("#front-right").children
+// // var teamB = document.querySelector("#team-right").children
+// var teamA = teamADefense.concat(teamAMid.concat(teamAFront))
+// var teamB = teamBDefense.concat(teamBMid.concat(teamBFront))
+// console.log("TEAM A CHILDREN") 
+// console.log(teamB)
 // teamA = [...teamA]
 // teamB = [...teamB]
 // console.log(teamA)
-
-var teamADefense = document.querySelector("#defense-left").children
-var teamAMid = document.querySelector("#mid-left").children
-var teamAFront = document.querySelector("#front-left").children
-console.log("TEAM A CHILDREN") 
-console.log(teamA)
-
-var teamBDefense = document.querySelector("#defense-right").children
-var teamBMid = document.querySelector("#mid-right").children
-var teamBFront = document.querySelector("#front-right").children
-// var teamB = document.querySelector("#team-right").children
-var teamA = teamADefense.concat(teamAMid.concat(teamAFront))
-var teamB = teamBDefense.concat(teamBMid.concat(teamBFront))
-console.log("TEAM A CHILDREN") 
-console.log(teamB)
-teamA = [...teamA]
-teamB = [...teamB]
-console.log(teamA)
 
 function getTeamA(){
 
@@ -178,7 +181,10 @@ function drop(e) {
 
     // get the draggable element
     const id = e.dataTransfer.getData('text/plain');
+    console.log("data transfer is :")
+    console.log(e.dataTransfer.getData('text/plain').innerHTML)
     const draggable = document.getElementById(id).cloneNode(true);
+    draggable.className = "player_holder_selected"
 
     //TODO replace if already there
 
@@ -196,7 +202,7 @@ var margin = {top: 20, right: 30, bottom: 40, left: 90},
     height = 400 - margin.top - margin.bottom;
 
 var xrange = 120
-var stats_categories = ["team points", "team efficiency"]
+var stats_categories = ["team points", "efficiency score"]
 
 
 // TEAM A
@@ -267,16 +273,21 @@ yB.selectAll("text")
 
 function stats(team){
   var points = 0
-  var effscore = 0
+  var effscore = 0.0
   var cnt = 0
   team.forEach( player => {
     if(player){
-      console.log(player.pts)
-     points = points + eval(player.pts)
-     effscore += eval(effscore)
+    console.log("stat : ")
+    console.log(player)
+    console.log(player.pts)
+    console.log(player.score)
+    points = points + eval(player.pts)
+
+     effscore += eval(player.score)
      cnt += 1
     }})
-  return [{key:"team points", value:points}, {key:"efficiency score", value:effscore / cnt}]
+    // 
+  return [{key:"team points", value:points}, {key:"efficiency score", value:(effscore * 100 / cnt)}]
 }
 
 
@@ -298,7 +309,13 @@ function updateGraph(){
     .append("rect")
     .merge(uA)
     .attr("x", function(d) { return xa(d.value); })
-    .attr("y", function(d) { return ya(d.key); })
+    .attr("y", function(d) { 
+      console.log("________________________________")
+      console.log(d)
+      console.log(d.key)
+      console.log("________________________________")
+      return ya(d.key); 
+    })
     .attr("width", function(d) { return xa(xrange - d.value); })
     .attr("height", ya.bandwidth() )
     .attr("fill", "#69b3a2")

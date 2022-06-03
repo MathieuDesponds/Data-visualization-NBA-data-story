@@ -47,7 +47,10 @@ d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-pro
         .data(allseasons)
         .enter()
         .append('option')
-        .text(function (d) { return d.slice(1); }) // text showed in the menu
+        .text(function (d) { 
+            
+            return d.slice(1) == "2003" ? "" : d.slice(1); 
+        }) // text showed in the menu
         .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
     d3.select("#selectButton")
