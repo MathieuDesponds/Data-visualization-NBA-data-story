@@ -43,7 +43,7 @@ var slider = svg.append("g")
     .attr("transform", "translate("  +margin.left+" ," + height/2 + ")");
 
 
-d3.csv("../data_web/seasons.csv",(data) => {
+d3.csv("https://raw.githubusercontent.com/com-480-data-visualization/datavis-project-2022-lebron-jenkins/master/data_web/seasons.csv",(data) => {
   var groupedData = d3.flatRollup(
     data,
     x => ({
