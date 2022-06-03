@@ -30,6 +30,7 @@ var currentValue = 0;
 var targetValue = width;
 var timer = 0;
 var playButton = d3.select("#viz1-play-button");
+var iconCont = playButton.selectAll('img')
 
 var x = d3.scaleLinear() //.scaleTime()
     .domain([start, end])
@@ -193,7 +194,8 @@ d3.csv("../data_web/seasons.csv",(data) => {
       currentValue = 0;
       clearInterval(timer);
       // timer = 0;
-      playButton.text("Play");
+      playButton.attr("buttontype", "paused");
+      iconCont.attr("src", playIcon)
     }
   }
 
