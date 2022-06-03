@@ -131,7 +131,7 @@ function getTeamA(){
     }
   )
 
-  return names.map( name => 
+  return names.map( name =>
     players.find( player => player.name == name)
   )
 }
@@ -258,7 +258,7 @@ var yB = svgB.append("g")
 yB.selectAll("text")
     .attr("transform", "translate(-50,0)")
     .style("text-anchor", "middle")
-    
+
 
 
 function stats(team){
@@ -301,6 +301,12 @@ function updateGraph(){
     .attr("fill", "#1d4289")
 
   uA.exit().remove()
+  svgA.data(statsA)
+      .append("text")
+      .attr("x", function(d) { return xa(d.value)-25; })
+      .attr("y", function(d) { return ya(d.key)+ya.bandwidth()/2;})
+      .style("font-size", "20px")
+      .text(function(d) { return parseInt(d.value);});
 
   //Bars
   uB = svgB.selectAll("myRect")
@@ -315,6 +321,12 @@ function updateGraph(){
     .attr("height", yb.bandwidth() )
     .attr("fill", "#c80f2e")
 
+  svgB.data(statsB)
+        .append("text")
+        .attr("x", function(d) { return xb(d.value)+15; })
+        .attr("y", function(d) { return yb(d.key)+ya.bandwidth()/2;})
+        .style("font-size", "20px")
+        .text(function(d) { return parseInt(d.value);});
   uB
   .exit()
   .remove()
