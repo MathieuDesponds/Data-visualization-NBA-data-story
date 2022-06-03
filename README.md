@@ -25,5 +25,6 @@ Folder :
 - `index.html` main page
 - `js/` contains all the script needed
 - `css/` contains the style sheets
+- `rapport_DataVisualization.pdf` final report of the project
 
 
