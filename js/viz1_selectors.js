@@ -62,12 +62,6 @@ class Viz1Selector {
   //   }
   // }
 
-  addSelectorForTeam(teams){
-    var dropdownButton = d3.select("#viz1-header")
-      .append('select')
-    
-  }
-
   showSelectorForTeams(teams,i){
     var dropdownButton = d3.select("#viz1-header")
       .append('select')
@@ -80,7 +74,7 @@ class Viz1Selector {
       .style("float", "right")
       .enter()
     	.append('option')
-      .text(function (d) { return d.city+" "+d.name; }) // text showed in the menu
+      .text(function (d) { return d.name+" "+d.city; }) // text showed in the menu
       .attr("value", function (d) { return d.id; }) // corresponding value returned by the butto
 
     dropdownButton.on("change", d => {
@@ -158,7 +152,7 @@ class Viz1Selector {
 
   getChosenTeams(){
     var out = []
-    for (let i = 0; i < Team.MAX_NUMBER_OF_TEAMS; i++) {
+    for (let i = 0; i < Team.MAX_NUMBER_OF_TEAMS+1; i++) {
       if (this.chosenTeams[i] != null && this.chosenTeams[i].id != 0){
         out.push(this.chosenTeams[i])
       }

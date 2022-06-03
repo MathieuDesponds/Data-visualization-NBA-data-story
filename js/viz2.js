@@ -32,7 +32,7 @@ var axisY = svg.append("g")
     .call(d3.axisLeft().scale(y))
 var axisY2= svg.append("g")
 axisY.selectAll("text")
-    .attr("transform", "translate(-10,-5)rotate(-45)")
+    .attr("transform", "translate(-10,0)")
     .style("text-anchor", "end");
 
 

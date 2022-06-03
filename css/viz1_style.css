@@ -8,7 +8,7 @@
   width: 20%;
   height : 100%;
   float:right; /* add this */
-  
+
   /* border: 1px solid black; */
   overflow-y: auto; /* will contain if #first is longer than #second */
 }
@@ -38,6 +38,7 @@
   width: 100%;
   float:left; /* add this */
   /* border: 1px solid black; */
+  background-color: #fff;
 }
 
 #new-team-button{
@@ -113,9 +114,9 @@
   /* border: 1px solid black; */
 }
 
-.subunit.USB { fill: #dcd; }
-.subunit.CAN { fill: #ddc; }
-.subunit.MEX { fill: #cdd; }
+.subunit.USB { fill: #ff6f00ad; }
+.subunit.CAN { fill: #0050b5; }
+.subunit.MEX { fill: #0050b5; }
 
 .subunit-boundary {
   fill: none;
@@ -124,8 +125,8 @@
   stroke-linejoin: round;
 }
 #viz1-play-button-zone {
-  
-  width : 65px; 
+
+  width : 65px;
   float:left;
 }
 #viz1-play-button {

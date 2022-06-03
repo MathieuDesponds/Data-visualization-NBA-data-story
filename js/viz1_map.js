@@ -28,6 +28,7 @@ export function drawMap(){
          .attr("d", path)
          .attr("class", "subunit-boundary");
 
+
          drawCities()
     });
 }
@@ -85,9 +86,15 @@ export function drawPaths(paths,teamColor, i){
               .delay((d, i) => TRAVEL_TIME/nb_new_comer*(i-(nb_path-nb_new_comer)))
             .transition()
               .ease(d3.easeLinear)
-              .style("stroke-opacity", 0.5)
+              // .style("stroke-opacity", 0.5)
               .style("stroke-width", 1)
               .duration(TRAVEL_TIME*2/5)
               .delay(TRAVEL_TIME/5)
+            .transition()
+              .ease(d3.easeLinear)
+              // .style("stroke-opacity", 0.5)
+              .style("stroke-width", 0)
+              .duration(TRAVEL_TIME*5)
+              .delay(TRAVEL_TIME*15)
     my_path.exit().remove()
 }

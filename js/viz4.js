@@ -11,7 +11,7 @@ var players = []
 class Player{
     constructor(name, id, pts){
         this.name = name;
-        this.id = id; 
+        this.id = id;
         this.pts = pts
     }
 }
@@ -44,7 +44,7 @@ function displayFaces(){
         upperDiv.className = "player_holder";
         upperDiv.id = `player_holder_${i}`;
         upperDiv.style = "display :flex; flex-direction:column;justify-content:center; align-items:center"
-        
+
         upperDiv.draggable = true;
         upperDiv.addEventListener('dragstart', dragStart);
         // the inner img
@@ -57,13 +57,13 @@ function displayFaces(){
         target = (i < (current_page * 10 + 5)) ? playerFacesRow1 : playerFacesRow2
         // name after
         var nameHolder = document.createTextNode(player.name)
-        
+
         upperDiv.appendChild(img)
         upperDiv.appendChild(nameHolder)
 
 
         target.appendChild(upperDiv)
-        
+
         console.log(target)
     }
 }
@@ -73,7 +73,7 @@ function whenDocumentLoaded(action) {
 		document.addEventListener("DOMContentLoaded", action);
 	} else {
 		// `DOMContentLoaded` already fired
-		
+
 	}
 }
 
@@ -109,7 +109,7 @@ boxes.forEach(box => {
 var teamADefense = document.querySelector("#defense-left").children
 var teamAMid = document.querySelector("#mid-left").children
 var teamAFront = document.querySelector("#front-left").children
-console.log("TEAM A CHILDREN") 
+console.log("TEAM A CHILDREN")
 console.log(teamA)
 
 var teamBDefense = document.querySelector("#defense-right").children
@@ -118,7 +118,7 @@ var teamBFront = document.querySelector("#front-right").children
 // var teamB = document.querySelector("#team-right").children
 var teamA = teamADefense.concat(teamAMid.concat(teamAFront))
 var teamB = teamBDefense.concat(teamBMid.concat(teamBFront))
-console.log("TEAM A CHILDREN") 
+console.log("TEAM A CHILDREN")
 console.log(teamB)
 teamA = [...teamA]
 teamB = [...teamB]
@@ -136,7 +136,7 @@ function getTeamA(){
     }
   )
 
-  return names.map( name => 
+  return names.map( name =>
     players.find( player => player.name == name)
   )
 }
@@ -153,7 +153,7 @@ function getTeamB(){
     }
   )
 
-  return names.map( name => 
+  return names.map( name =>
     players.find( player => player.name == name)
   )
 }
@@ -325,4 +325,3 @@ function updateGraph(){
 };
 
 updateGraph()
-
