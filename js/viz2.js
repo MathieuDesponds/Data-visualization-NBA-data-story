@@ -78,8 +78,8 @@ function updateRanking(season){
         var last_ranking = data.filter( standing => standing["standingsdate"] == last_date)
             .map(row => [parseInt(row['next_rank']), row['team_id']])
             .sort( function( a , b){
-                if(a[0] > b[0]) return 1;
-                if(a[0] < b[0]) return -1;
+                if(a[0] > b[0]) return -1;
+                if(a[0] < b[0]) return 1;
                 return 0;
             })
             .map(row => getNameFromTeamId(row[1]));

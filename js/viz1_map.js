@@ -94,7 +94,7 @@ export function drawPaths(paths,teamColor, i){
               .ease(d3.easeLinear)
               // .style("stroke-opacity", 0.5)
               .style("stroke-width", 0)
-              .duration(TRAVEL_TIME*5)
-              .delay((d, i) => TRAVEL_TIME*+ TRAVEL_TIME*5/nb_new_comer*(i-(nb_path-nb_new_comer)))
+              .duration(TRAVEL_TIME*10)
+              .delay((d, i) => TRAVEL_TIME*60/nb_new_comer*((nb_path-nb_new_comer)-i))
     my_path.exit().remove()
 }
